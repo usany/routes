@@ -84,22 +84,29 @@ export default function Process() {
   const steps = getProcessSteps(vehicle);
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen pb-24">
       <div className="text-center max-w-2xl mx-auto p-8">
         <h1 className="text-4xl font-bold mb-8 capitalize">
           {vehicle} Journey to {destination}
         </h1>
 
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold mb-6">Journey Process:</h2>
-          {steps.map((step, index) => (
-            <div key={index} className="flex items-center space-x-4 text-left">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold">
-                {index + 1}
-              </div>
-              <p className="text-lg">{step}</p>
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold mb-6">Journey Progress:</h2>
+          <div className="relative flex justify-center">
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
+            <div className="relative space-y-8">
+              {steps.map((step, index) => (
+                <div key={index} className="flex items-center space-x-6">
+                  <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                    {index + 1}
+                  </div>
+                  <div className="text-left max-w-md">
+                    <p className="text-lg font-medium">{step}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
 
         <div className="mt-8 space-y-4">

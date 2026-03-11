@@ -57,27 +57,27 @@ export function DockNavigation() {
   };
 
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-white/10 dark:bg-black/30 backdrop-blur-2xl rounded-3xl px-6 py-4 shadow-2xl border border-white/20 dark:border-white/10">
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+      <div className="bg-white/10 dark:bg-black/30 backdrop-blur-2xl rounded-3xl px-6 py-3 shadow-2xl border border-white/20 dark:border-white/10">
         <div className="flex items-center gap-3">
           {dockItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               className={`
-                relative group flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 ease-out
+                relative group flex flex-col items-center justify-center p-3 rounded-2xl transition-all duration-300 ease-out
                 ${isActive(item.path) 
-                  ? 'bg-gradient-to-br from-blue-500/30 to-blue-600/30 text-white scale-125 shadow-lg shadow-blue-500/25 border border-blue-400/30' 
-                  : 'text-gray-400 hover:text-white hover:bg-white/10 hover:scale-110 hover:shadow-xl hover:backdrop-blur-sm'
+                  ? 'bg-gradient-to-br from-blue-500/30 to-blue-600/30 text-white scale-110 shadow-lg shadow-blue-500/25 border border-blue-400/30' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/10 hover:scale-105 hover:shadow-xl hover:backdrop-blur-sm'
                 }
               `}
               title={item.label}
             >
-              <div className="w-7 h-7 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <div className="w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                 {item.icon}
               </div>
               {isActive(item.path) && (
-                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg shadow-white/50 animate-pulse" />
+                <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg shadow-white/50 animate-pulse" />
               )}
               {!isActive(item.path) && (
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
