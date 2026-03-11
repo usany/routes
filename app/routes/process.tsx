@@ -180,7 +180,6 @@ export default function Process() {
                   } else if (currentHour >= 13 && currentHour < 18) {
                     nextBus = 3
                   }
-                  console.log(nextBus)
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
