@@ -191,7 +191,7 @@ export default function Process() {
                             <p key={index} className="text-sm text-gray-600 mt-1">
                               Bus data: {routeName}
                               <br />
-                              {predictTime1 ? `${predictTime1}분 전` : '대기'}
+                              {predictTime1 ? `${predictTime1}분` : '대기'}
                             </p>
                           )
                         })
