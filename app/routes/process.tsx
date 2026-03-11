@@ -175,14 +175,15 @@ export default function Process() {
                     }
                   } else if (currentHour > 8 && currentHour < 10) {
                     nextBus = 1
-                  } else if (currentHour >= 10) {
+                  } else if (currentHour >= 10 && currentHour < 13) {
                     nextBus = 2
-                  } else if (currentHour < 18) {
+                  } else if (currentHour >= 13 && currentHour < 18) {
                     nextBus = 3
                   }
+                  console.log(nextBus)
                   return (
                     <div key={index} className="flex items-center space-x-6">
-                      <div className={`w-18 h-16 ${isNightTime ? 'bg-green-600' : 'bg-blue-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
+                      <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
                         {commuteTime[index]}
                       </div>
                       <div className="text-left max-w-md">
