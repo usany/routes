@@ -68,7 +68,7 @@ export default function Process() {
         {id: 228001174, nameKo: "사색의 광장", nameEn: "Sasakomaru Square"},
         {id: 228000704 , nameKo: "생명과학대.산업대학", nameEn: "Life Science College.Industrial College"},
         {id: 228000703 , nameKo: "경희대체육대학.외대", nameEn: "KHU Physical Education College.Foreign University"},
-        {id: 203000125 , nameKo: "경희대학교", nameEn: "KHU"}
+        {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
       taxi: [
         "Call or hail a taxi",
@@ -145,7 +145,6 @@ export default function Process() {
                 // For bus steps, we can access the fetched data from state
                 const stepId = typeof step !== 'string' ? step.id : null;
                 const fetchedData = stepId ? busData[stepId] : null;
-                
                 return (
                   <div key={index} className="flex items-center space-x-6">
                     <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
@@ -156,9 +155,17 @@ export default function Process() {
                         {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
                       </p>
                       {fetchedData && (
-                        <p className="text-sm text-gray-600 mt-1">
-                          Bus data: {JSON.stringify(fetchedData)}
-                        </p>
+                        fetchedData.map((data: any, index: number) => {
+                          const routeName = data.routeName
+                          const predictTime1 = data.predictTime1;
+                          return (
+                            <p key={index} className="text-sm text-gray-600 mt-1">
+                              Bus data: {JSON.stringify(routeName)}
+                              <br />
+                              {JSON.stringify(predictTime1)}
+                            </p>
+                          )
+                        })
                       )}
                     </div>
                   </div>
