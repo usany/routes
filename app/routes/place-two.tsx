@@ -16,7 +16,7 @@ export default function PlaceTwo() {
               <svg className="w-12 h-12 mb-2 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
               </svg>
-              <span className="font-medium">외국어대학-사색의 광장</span>
+              <span className="font-medium">버스: 외국어대학-사색의 광장</span>
             </a>
             <a
               href="/process?vehicle=bus&destination=Place One&from=Place Two"
@@ -25,7 +25,7 @@ export default function PlaceTwo() {
               <svg className="w-12 h-12 mb-2 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
               </svg>
-              <span className="font-medium">사색의 광장-정문 건너편</span>
+              <span className="font-medium">버스: 사색의 광장-정문 건너편</span>
             </a>
             <a
               href="/process?vehicle=taxi&destination=Place One&from=Place Two"
