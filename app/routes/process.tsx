@@ -73,7 +73,7 @@ export default function Process() {
         "경희의료원",
       ],
       busTwo: [
-        "Go to the train station",
+        "외대앞역",
         "Buy a ticket",
         "Wait for the train",
         "Board the train",
