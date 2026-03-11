@@ -165,7 +165,6 @@ export default function Process() {
                 if (vehicle === "commute") {
                   const currentHour = new Date().getHours();
                   const currentMinute = new Date().getMinutes();
-                  const isNightTime = currentHour > 18 || currentHour < 6;
                   let nextBus = 4
                   if (currentHour >= 6 && currentHour <= 8) {
                     if (currentHour === 8 && currentMinute >= 45) {
