@@ -136,7 +136,7 @@ export default function Process() {
         </h1>
 
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold mb-6">Journey Progress:</h2>
+          <h2 className="text-2xl font-semibold mb-6">사색의 광장 - 정문 건너편</h2>
           {vehicle === 'bus' && (
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600 mb-2">
