@@ -84,16 +84,14 @@ export default function Process() {
         "Arrive at " + destination
       ],
       bike: [
-        "Check the bike",
-        "Start cycling",
-        "Follow the bike path",
-        "Lock the bike",
-        "Arrive at " + destination
+        {id: 228000710 , nameKo: "외국어대", nameEn: "Sasakomaru Square"},
+        {id: 228000709 , nameKo: "생명과학대", nameEn: "Life Science College.Industrial College"},
+        {id: 228000708 , nameKo: "사색의 광장", nameEn: "KHU Physical Education College.Foreign University"},
       ],
       bus: [
         {id: 228001174, nameKo: "사색의 광장", nameEn: "Sasakomaru Square"},
-        {id: 228000704 , nameKo: "생명과학대.산업대학", nameEn: "Life Science College.Industrial College"},
-        {id: 228000703 , nameKo: "경희대체육대학.외대", nameEn: "KHU Physical Education College.Foreign University"},
+        {id: 228000704 , nameKo: "생명과학대", nameEn: "Life Science College.Industrial College"},
+        {id: 228000703 , nameKo: "체육대", nameEn: "KHU Physical Education College.Foreign University"},
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
       taxi: [
