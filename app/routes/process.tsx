@@ -145,7 +145,7 @@ export default function Process() {
 
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold mb-6">{process[vehicle]}</h2>
-          {vehicle !== 'bus' && (
+          {vehicle.includes('bus') && (
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600 mb-2">
                 Next data update in: <span className="font-semibold text-blue-600">{timeUntilNextFetch}s</span>
@@ -180,16 +180,19 @@ export default function Process() {
                     nextBus = 3
                   }
                   return (
-                    <div key={index} className="flex items-center space-x-6">
-                      <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {commuteTime[index]}
+                    <>
+                      <div className='flex justify-center'>학기 중 공휴일, 휴무일을 제외한 평일</div>
+                      <div key={index} className="flex items-center space-x-6">
+                        <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
+                          {commuteTime[index]}
+                        </div>
+                        <div className="text-left max-w-md">
+                          <p className="text-lg font-medium">
+                            {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-left max-w-md">
-                        <p className="text-lg font-medium">
-                          {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
-                        </p>
-                      </div>
-                    </div>
+                    </>
                   )
                 }
                 
