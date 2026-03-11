@@ -158,6 +158,12 @@ export default function Process() {
               </button>
             </div>
           )}
+          {vehicle === 'commute' && (
+            <div className='flex flex-col items-center'>
+              <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
+              <div>요금: 무료</div>
+            </div>
+          )}
           <div className="relative flex justify-center">
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8">
@@ -180,22 +186,16 @@ export default function Process() {
                     nextBus = 3
                   }
                   return (
-                    <>
-                      <div className='flex flex-col items-center'>
-                        <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
-                        <div>요금: 무료</div>
+                    <div key={index} className="flex items-center space-x-6">
+                      <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
+                        {commuteTime[index]}
                       </div>
-                      <div key={index} className="flex items-center space-x-6">
-                        <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                          {commuteTime[index]}
-                        </div>
-                        <div className="text-left max-w-md">
-                          <p className="text-lg font-medium">
-                            {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
-                          </p>
-                        </div>
+                      <div className="text-left max-w-md">
+                        <p className="text-lg font-medium">
+                          {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
+                        </p>
                       </div>
-                    </>
+                    </div>
                   )
                 }
                 
