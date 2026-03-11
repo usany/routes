@@ -87,12 +87,12 @@ export default function Process() {
         "Disembark at port",
         "Arrive at " + destination
       ],
-      bike: [
+      busTo: [
         {id: 228000710 , nameKo: "외국어대", nameEn: "Sasakomaru Square"},
         {id: 228000709 , nameKo: "생명과학대", nameEn: "Life Science College.Industrial College"},
         {id: 228000708 , nameKo: "사색의 광장", nameEn: "KHU Physical Education College.Foreign University"},
       ],
-      bus: [
+      busFrom: [
         {id: 228001174, nameKo: "사색의 광장", nameEn: "Sasakomaru Square"},
         {id: 228000704 , nameKo: "생명과학대", nameEn: "Life Science College.Industrial College"},
         {id: 228000703 , nameKo: "체육대", nameEn: "KHU Physical Education College.Foreign University"},
