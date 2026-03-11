@@ -5,7 +5,7 @@ const process = {
   busTo: '외국어대-사색의 광장',
   busFrom: '사색의 광장-정문 건너편',
   shuttle: '캠퍼스 셔틀버스'
-}
+} as { [key: string]: string };
 export default function Process() {
   const [searchParams] = useSearchParams();
   const vehicle = searchParams.get("vehicle");
@@ -36,7 +36,7 @@ export default function Process() {
   useEffect(() => {
     if (vehicle === 'busTo' || vehicle === 'busFrom') {
       // Fetch immediately
-      fetchBusData();x
+      fetchBusData();
       
       // Then fetch every minute (60000 milliseconds)
       const interval = setInterval(fetchBusData, 60000);
