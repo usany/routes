@@ -66,28 +66,28 @@ export default function Process() {
 
   const getProcessSteps = (vehicleType: string) => {
     const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string; })[] } = {
-      car: [
+      busOne: [
         "Start the car engine",
         "Enter destination in GPS", 
         "Follow the route",
         "Park at destination",
         "Arrive at " + destination
       ],
-      train: [
+      busTwo: [
         "Go to the train station",
         "Buy a ticket",
         "Wait for the train",
         "Board the train",
         "Arrive at " + destination + " station"
       ],
-      plane: [
-        "Go to the airport",
-        "Check in and go through security",
-        "Board the plane", 
-        "Flight to destination",
-        "Arrive at " + destination
+      shuttleSeoul: [
+        "온실-외국어대학-생명과학대학-사색의 광장",
+        "온실-외국어대학-생명과학대학-사색의 광장",
+        "온실-외국어대학-생명과학대학-사색의 광장",
+        "온실-외국어대학-생명과학대학-사색의 광장",
+        "온실-외국어대학-생명과학대학-사색의 광장",
       ],
-      ship: [
+      bicycle: [
         "Go to the port",
         "Board the ship",
         "Sail to destination",
