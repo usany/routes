@@ -43,7 +43,7 @@ export default function PlaceOne() {
               <svg className="w-12 h-12 mb-2 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
               </svg>
-              <span className="font-medium">캠퍼스 셔틀버스</span>
+              <span className="font-medium">서울-국제 셔틀버스</span>
             </a>
           </div>
         </div>
