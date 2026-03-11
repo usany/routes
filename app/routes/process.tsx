@@ -1,10 +1,12 @@
 import { useSearchParams, Link } from "react-router";
+import { useState, useEffect } from "react";
 
 export default function Process() {
   const [searchParams] = useSearchParams();
   const vehicle = searchParams.get("vehicle");
   const destination = searchParams.get("destination");
   const from = searchParams.get("from");
+  const [busData, setBusData] = useState<{ [key: number]: any }>({});
 
   const fetchStep = async (id: number) => {
     const response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
@@ -12,6 +14,18 @@ export default function Process() {
     const res = data.response.msgBody.busArrivalList;
     return res;
   }
+
+  useEffect(() => {
+    if (vehicle === 'bus') {
+      const steps = getProcessSteps(vehicle);
+      steps.forEach(async (step) => {
+        if (typeof step !== 'string' && step.id) {
+          const data = await fetchStep(step.id);
+          setBusData(prev => ({ ...prev, [step.id]: data }));
+        }
+      });
+    }
+  }, [vehicle]);
 
   const getProcessSteps = (vehicleType: string) => {
     const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string; })[] } = {
@@ -112,7 +126,7 @@ export default function Process() {
           <div className="relative flex justify-center">
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8">
-              {steps.map(async (step, index) => {
+              {steps.map((step, index) => {
                 if (vehicle !== "bus") {
                   return (
                     <div key={index} className="flex items-center space-x-6">
@@ -127,14 +141,11 @@ export default function Process() {
                     </div>
                   )
                 }
-                const fetched = fetchStep(step.id);
-                console.log(fetched)
-                console.log('practices')
-                // console.log(fetched)
-                // const fetchedData = fetched.map(fetchedItem => {
-                //   console.log(fetchedItem)
-                //   return fetchedItem;
-                // })
+                
+                // For bus steps, we can access the fetched data from state
+                const stepId = typeof step !== 'string' ? step.id : null;
+                const fetchedData = stepId ? busData[stepId] : null;
+                
                 return (
                   <div key={index} className="flex items-center space-x-6">
                     <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
@@ -144,6 +155,11 @@ export default function Process() {
                       <p className="text-lg font-medium">
                         {typeof step === 'string' ? step : `${step.nameKo} (${step.nameEn})`}
                       </p>
+                      {fetchedData && (
+                        <p className="text-sm text-gray-600 mt-1">
+                          Bus data: {JSON.stringify(fetchedData)}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )
