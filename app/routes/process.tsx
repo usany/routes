@@ -1,6 +1,10 @@
 import { useSearchParams, Link } from "react-router";
 import { useState, useEffect } from "react";
 
+const process = {
+  bike: '외국어대-사색의 광장',
+  bus: '사색의 광장-정문 건너편',
+}
 export default function Process() {
   const [searchParams] = useSearchParams();
   const vehicle = searchParams.get("vehicle");
