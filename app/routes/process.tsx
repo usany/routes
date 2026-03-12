@@ -13,6 +13,20 @@ export const commuteTime = [
   "1:00pm",
   "6:00pm",
 ] as string[];
+export const shuttleSeoul = [
+  "07:10",
+  "10:00",
+  "11:55",
+  "13:30",
+  "16:40",
+] as string[];
+export const shuttleGlobal = [
+  "07:20",
+  "10:00",
+  "13:00",
+  "16:40",
+  "18:00",
+] as string[];
 export default function Process() {
   const [searchParams] = useSearchParams();
   const vehicle = searchParams.get("vehicle");
