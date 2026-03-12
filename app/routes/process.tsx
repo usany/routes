@@ -1,6 +1,6 @@
 import { useSearchParams, Link } from "react-router";
 import { useState, useEffect } from "react";
-import { Bus } from "lucide-react";
+import { Bus, BusFront } from "lucide-react";
 
 export const process = {
   busTo: '외국어대학-사색의 광장',
@@ -328,7 +328,7 @@ export default function Process() {
                 return (
                   <div key={index} className="flex items-center space-x-6">
                     <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
-                      <Bus />
+                      <BusFront />
                     </div>
                     <div className="text-left max-w-md">
                       <p className="text-lg font-medium">
