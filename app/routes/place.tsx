@@ -10,7 +10,7 @@ export default function Place() {
           {/* <h2 className="text-2xl font-semibold mb-6">Choose your destination:</h2> */}
           <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
             <a
-              href="/busOne"
+              href="/process?vehicle=busOne"
               className="flex flex-col items-center p-6 bg-blue-100 dark:bg-blue-900/30 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -19,7 +19,7 @@ export default function Place() {
               <span className="font-medium">봉선사입구-내산정 방면</span>
             </a>
             <a
-              href="/busTwo"
+              href="/process?vehicle=busTwo"
               className="flex flex-col items-center p-6 bg-green-100 dark:bg-green-900/30 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
