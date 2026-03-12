@@ -104,6 +104,12 @@ export default function Process() {
         {id: 228000703 , nameKo: "체육대학", nameEn: "KHU Physical Education College.Foreign University"},
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
+      busGwangneungOne: [
+        {id: 222000665, nameKo: "봉선사입구 내산정 방면", nameEn: "Sasakomaru Square"},
+      ],
+      busGwangneungTwo: [
+        {id: 222000751, nameKo: "봉선사입구 종점 방면", nameEn: "Sasakomaru Square"},
+      ],
       shuttle: [
         "사색의 광장-생명과학대학-체육대학-온실",
         "사색의 광장-생명과학대학-체육대학-온실",
