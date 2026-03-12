@@ -1,13 +1,13 @@
 import { useSearchParams, Link } from "react-router";
 import { useState, useEffect } from "react";
 
-const process = {
+export const process = {
   busTo: '외국어대-사색의 광장',
   busFrom: '사색의 광장-정문 건너편',
   shuttle: '캠퍼스 셔틀버스',
   commute: '영통역 통학버스'
 } as { [key: string]: string };
-const commuteTime = [
+export const commuteTime = [
   "8:45am",
   "10:00am",
   "1:00pm",
@@ -94,14 +94,14 @@ export default function Process() {
         "Arrive at " + destination
       ],
       busTo: [
-        {id: 228000710 , nameKo: "외국어대", nameEn: "Sasakomaru Square"},
-        {id: 228000709 , nameKo: "생명과학대", nameEn: "Life Science College.Industrial College"},
+        {id: 228000710 , nameKo: "외국어대학", nameEn: "Sasakomaru Square"},
+        {id: 228000709 , nameKo: "생명과학대학", nameEn: "Life Science College.Industrial College"},
         {id: 228000708 , nameKo: "사색의 광장", nameEn: "KHU Physical Education College.Foreign University"},
       ],
       busFrom: [
         {id: 228001174, nameKo: "사색의 광장", nameEn: "Sasakomaru Square"},
-        {id: 228000704 , nameKo: "생명과학대", nameEn: "Life Science College.Industrial College"},
-        {id: 228000703 , nameKo: "체육대", nameEn: "KHU Physical Education College.Foreign University"},
+        {id: 228000704 , nameKo: "생명과학대학", nameEn: "Life Science College.Industrial College"},
+        {id: 228000703 , nameKo: "체육대학", nameEn: "KHU Physical Education College.Foreign University"},
         {id: 203000125 , nameKo: "정문 건너편", nameEn: "KHU"}
       ],
       shuttle: [
