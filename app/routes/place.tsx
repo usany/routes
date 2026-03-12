@@ -2,12 +2,12 @@ export default function Place() {
   return (
     <div className="flex items-center justify-center min-h-screen pb-24">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-8">Place</h1>
+        <h1 className="text-4xl font-bold mb-8">경희대 광릉캠</h1>
         <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-          This is the main place in your navigation dock.
+          어디로 떠나볼까요?
         </p>
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold mb-6">Choose your destination:</h2>
+          {/* <h2 className="text-2xl font-semibold mb-6">Choose your destination:</h2> */}
           <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
             <a
               href="/place-one"
