@@ -28,7 +28,7 @@ export default function PlaceOne() {
               <span className="font-medium">회기역-외대앞역 02번</span>
             </a>
             <a
-              href="/process?vehicle=plane&destination=Place Two&from=Place One"
+              href="/process?vehicle=busThree&destination=Place Two&from=Place One"
               className="flex flex-col items-center p-6 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors"
             >
               <svg className="w-12 h-12 mb-2 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
