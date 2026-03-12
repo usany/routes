@@ -196,19 +196,33 @@ export default function Process() {
                 if (vehicle === "shuttleSeoul") {
                   const currentHour = new Date().getHours();
                   const currentMinute = new Date().getMinutes();
-                  let nextBus = 4
-                  if (currentHour >= 6 && currentHour <= 8) {
-                    if (currentHour === 8 && currentMinute >= 45) {
+                  let nextBus = 5
+                  if (currentHour >= 6 && currentHour <= 7) {
+                    if (currentHour === 7 && currentMinute >= 10) {
                       nextBus = 1
                     } else {
                       nextBus = 0
                     }
-                  } else if (currentHour > 8 && currentHour < 10) {
+                  } else if (currentHour > 7 && currentHour < 10) {
                     nextBus = 1
-                  } else if (currentHour >= 10 && currentHour < 13) {
-                    nextBus = 2
-                  } else if (currentHour >= 13 && currentHour < 18) {
-                    nextBus = 3
+                  } else if (currentHour > 10 && currentHour <= 11) {
+                    if (currentHour === 11 && currentMinute >= 55) {
+                      nextBus = 3
+                    } else {
+                      nextBus = 2
+                    }
+                  } else if (currentHour > 11 && currentHour <= 13) {
+                    if (currentMinute >= 30) {
+                      nextBus = 4
+                    } else {
+                      nextBus = 3
+                    }
+                  } else if (currentHour > 13 && currentHour <= 16) {
+                    if (currentHour === 16 && currentMinute >= 40) {
+                      nextBus = 5
+                    } else {
+                      nextBus = 4
+                    }
                   }
                   return (
                     <div key={index} className="flex items-center space-x-6">
