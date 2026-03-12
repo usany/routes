@@ -79,7 +79,7 @@ export default function Process() {
   }, [vehicle]);
 
   const getProcessSteps = (vehicleType: string) => {
-    const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
+    const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
       busOne: [
         "회기역",
         "경희대입구", 
@@ -213,11 +213,40 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {step.clock}
+                        {(step as any).clock}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {step.routeKo}
+                          {(step as any).routeKo}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                } else if (vehicle === "shuttleGlobal") {
+                  const currentHour = new Date().getHours();
+                  const currentMinute = new Date().getMinutes();
+                  let nextBus = 4
+                  if (currentHour >= 6 && currentHour <= 8) {
+                    if (currentHour === 8 && currentMinute >= 45) {
+                      nextBus = 1
+                    } else {
+                      nextBus = 0
+                    }
+                  } else if (currentHour > 8 && currentHour < 10) {
+                    nextBus = 1
+                  } else if (currentHour >= 10 && currentHour < 13) {
+                    nextBus = 2
+                  } else if (currentHour >= 13 && currentHour < 18) {
+                    nextBus = 3
+                  }
+                  return (
+                    <div key={index} className="flex items-center space-x-6">
+                      <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
+                        {(step as any).clock}
+                      </div>
+                      <div className="text-left max-w-md">
+                        <p className="text-lg font-medium">
+                          {(step as any).routeKo}
                         </p>
                       </div>
                     </div>
@@ -242,11 +271,11 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {step.clock}
+                        {(step as any).clock}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {step.routeKo}
+                          {(step as any).routeKo}
                         </p>
                       </div>
                     </div>
