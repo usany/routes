@@ -213,11 +213,11 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {(step as any).clock}
+                        {step.clock}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {(step as any).routeKo}
+                          {step.routeKo}
                         </p>
                       </div>
                     </div>
@@ -242,11 +242,11 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {(step as any).clock}
+                        {step.clock}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {(step as any).routeKo}
+                          {step.routeKo}
                         </p>
                       </div>
                     </div>
@@ -271,11 +271,11 @@ export default function Process() {
                   return (
                     <div key={index} className="flex items-center space-x-6">
                       <div className={`w-18 h-16 ${nextBus <= index ? 'bg-blue-600' : 'bg-gray-600'} text-white rounded-md flex items-center justify-center font-semibold text-md z-10`}>
-                        {(step as any).clock}
+                        {step.clock}
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {(step as any).routeKo}
+                          {step.routeKo}
                         </p>
                       </div>
                     </div>
