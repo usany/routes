@@ -51,8 +51,8 @@ export function DockNavigation() {
       ),
     },
     {
-      path: "/settings",
-      label: "Settings",
+      path: "/place",
+      label: "Place",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -65,8 +65,8 @@ export function DockNavigation() {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M12 1v6m0 6v6m4.22-13.22l4.24 4.24M1.54 9.96l4.24 4.24m12.44 0l4.24 4.24M1.54 14.04l4.24-4.24"/>
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
         </svg>
       ),
     },
