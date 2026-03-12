@@ -52,7 +52,7 @@ export default function PlaceOne() {
               <svg className="w-12 h-12 mb-2 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
               </svg>
-              <span className="font-medium">자전거 공유 A03번</span>
+              <span className="font-medium">자전거 공유</span>
             </a>
           </div>
         </div>
