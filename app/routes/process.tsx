@@ -41,7 +41,7 @@ export default function Process() {
   };
 
   useEffect(() => {
-    if (vehicle === 'busTo' || vehicle === 'busFrom') {
+    if (vehicle === 'busTo' || vehicle === 'busFrom' || vehicle === 'busGwangneungOne' || vehicle === 'busGwangneungTwo') {
       // Fetch immediately
       fetchBusData();
       
@@ -247,6 +247,7 @@ export default function Process() {
                 // For bus steps, we can access the fetched data from state
                 const stepId = typeof step !== 'string' ? step.id : null;
                 const fetchedData = stepId ? busData[stepId] : null;
+                
                 return (
                   <div key={index} className="flex items-center space-x-6">
                     <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
