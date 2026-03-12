@@ -209,7 +209,7 @@ export default function Process() {
             </div>
           )}
           <div className="relative">
-            <div className="absolute left-16 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
+            <div className="absolute left-15 top-0 bottom-0 w-1 bg-gray-300 dark:bg-gray-600"></div>
             <div className="relative space-y-8 pl-8">
               {steps.map((step, index) => {
                 if (vehicle === "shuttleSeoul") {
