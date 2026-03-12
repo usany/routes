@@ -217,7 +217,7 @@ export default function Process() {
                       </div>
                       <div className="text-left max-w-md">
                         <p className="text-lg font-medium">
-                          {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
+                          {step.routeKo}
                         </p>
                       </div>
                     </div>
