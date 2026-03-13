@@ -328,14 +328,14 @@ export default function Process() {
                   <div key={index} className="flex space-x-6">
                     <div className='flex flex-col items-center justify-space'>
                       <div className='flex flex-col items-center justify-center'>
-                        <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
-                          <BusFront />
-                        </div>
                         {fetchedData && fetchedData.some((data: any) => data.locationNo1 === 1) && (
                           <div className='h-16 mt-2'>
                             <BusFront />
                           </div>
                         )}
+                        <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
+                          <BusFront />
+                        </div>
                       </div>
                     </div>
                     <div className="text-left max-w-md flex-1">
