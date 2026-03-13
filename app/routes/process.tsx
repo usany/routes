@@ -328,11 +328,19 @@ export default function Process() {
                   <div key={index} className="flex space-x-6">
                     <div className='flex flex-col items-center justify-space'>
                       <div className='flex flex-col items-center justify-center'>
-                        {fetchedData && fetchedData.some((data: any) => data.locationNo1 === 1) && (
-                          <div className='h-16'>
-                            <BusFront />
-                          </div>
-                        )}
+                        {fetchedData && (() => {
+                          const targetDataList = fetchedData.filter((data: any) => data.locationNo1 === 1);
+                          return targetDataList.length > 0 ? (
+                            <div className='flex h-16 items-center -ml-20'>
+                              <div className="mr-2">
+                                {targetDataList.map((data: any, idx: number) => (
+                                  <div key={idx}>{data.routeName}</div>
+                                ))}
+                              </div>
+                              <BusFront />
+                            </div>
+                          ) : null;
+                        })()}
                         <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
                           <MonitorStop />
                         </div>
