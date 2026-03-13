@@ -329,7 +329,7 @@ export default function Process() {
                     <div className='flex flex-col items-center justify-space'>
                       <div className='flex flex-col items-center justify-center'>
                         {fetchedData && fetchedData.some((data: any) => data.locationNo1 === 1) && (
-                          <div className='h-16 mt-2'>
+                          <div className='h-16'>
                             <BusFront />
                           </div>
                         )}
