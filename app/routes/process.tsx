@@ -326,14 +326,13 @@ export default function Process() {
                 const fetchedData = stepId ? busData[stepId] : null;
                 
                 return (
-                  <div key={index} className="flex items-center space-x-6 h-full">
-                    <div className='flex flex-col items-between'>
-                      <BusFront />
+                  <div key={index} className="flex items-start space-x-6">
+                    <div className='flex flex-col items-center justify-center'>
                       <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
                         <BusFront />
                       </div>
                     </div>
-                    <div className="text-left max-w-md">
+                    <div className="text-left max-w-md flex-1">
                       <p className="text-lg font-medium">
                         {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                       </p>
