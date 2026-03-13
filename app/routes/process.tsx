@@ -334,7 +334,7 @@ export default function Process() {
                           </div>
                         )}
                         <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
-                          <BusFront />
+                          <MonitorStop />
                         </div>
                       </div>
                     </div>
@@ -342,7 +342,7 @@ export default function Process() {
                       <p className="text-lg font-medium">
                         {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                       </p>
-{fetchedData && (
+                      {fetchedData && (
                         fetchedData.map((data: any, dataIndex: number) => {
                           const routeName = data.routeName
                           const predictTime1 = data.predictTime1;
