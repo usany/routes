@@ -4,6 +4,6 @@ export default [
   index("routes/home.tsx"),
   route("place-one", "routes/place-one.tsx"),
   route("place-two", "routes/place-two.tsx"),
-  route("place", "routes/place.tsx"),
+  route("gwangneung", "routes/gwangneungRoutes.tsx"),
   route("process", "routes/process.tsx")
 ] satisfies RouteConfig;
