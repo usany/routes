@@ -338,11 +338,14 @@ export default function Process() {
                         fetchedData.map((data: any, index: number) => {
                           const routeName = data.routeName
                           const predictTime1 = data.predictTime1;
+                          const locationNo1 = data.locationNo1
+                          const stationNm1 = data.stationNm1
                           return (
                             <p key={index} className="text-sm text-gray-600 mt-1">
                               Bus data: {routeName}
                               <br />
                               {predictTime1 ? `${predictTime1}분` : '대기'}
+                              {predictTime1 ? `(${stationNm1} ${locationNo1})` : ''}
                             </p>
                           )
                         })
