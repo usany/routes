@@ -329,7 +329,7 @@ export default function Process() {
                     <div className='flex flex-col items-center justify-space'>
                       <div className='flex flex-col items-center justify-center'>
                         {fetchedData && (() => {
-                          const targetDataList = vehicle.includes('busGwangneung') ? fetchedData.filter((data: any) => data.predictTime1 === 1) : fetchedData.filter((data: any) => data.locationNo1 === 1);
+                          const targetDataList = fetchedData.filter((data: any) => data.locationNo1 === 1);
                           return targetDataList.length > 0 ? (
                             <div className='flex h-16 items-center -ml-20'>
                               <div className="mr-2">
