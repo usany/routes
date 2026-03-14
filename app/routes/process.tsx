@@ -238,7 +238,7 @@ export default function Process() {
           {vehicle === 'busThree' && (
             <div className='flex flex-col items-center'>
               <div>장한평역-청량리역-경희대</div>
-              <div>첫차: 막차: 배차간격: 평일 75분</div>
+              <div>운행시간: 배차간격: 평일 75분</div>
             </div>
           )}
           {vehicle.includes('bus') && <Schedule vehicle={vehicle} />}
