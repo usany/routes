@@ -75,8 +75,8 @@ export const shuttleGlobal = [
 export default function Process() {
   const [searchParams] = useSearchParams();
   const vehicle = searchParams.get("vehicle");
-  const destination = searchParams.get("destination");
-  const from = searchParams.get("from");
+  // const destination = searchParams.get("destination");
+  // const from = searchParams.get("from");
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
   
