@@ -85,6 +85,8 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
       <h1>Schedule</h1>
       {busData.map((bus: any, index: number) => {
         const routeName = bus.routeName;
+        const upFirstTime = bus.upFirstTime;
+        const upLastTime = bus.upLastTime;
         const peekAlloc = bus.peekAlloc;
         const nPeekAlloc = bus.nPeekAlloc;
         const satPeekAlloc = bus.satPeekAlloc;
@@ -98,7 +100,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
             <p>{routeName}</p>
             <div className='flex'>
               <div>운행시간</div>
-              <div></div>
+              <div>{upFirstTime}~{upLastTime}</div>
             </div>
             <div className='flex'>
               <div>배차간격</div>
