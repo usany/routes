@@ -241,8 +241,8 @@ export default function Process() {
               <div>첫차: 막차: 배차간격: 75분</div>
             </div>
           )}
-          {vehicle.indexOf('bus') !== -1 && <Schedule vehicle={vehicle} />}
-          {vehicle.indexOf('bus') !== -1 && (
+          {vehicle.includes('bus') && <Schedule vehicle={vehicle} />}
+          {vehicle.includes('bus') && (
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600 mb-2">
                 Next data update in: <span className="font-semibold text-blue-600">{timeUntilNextFetch}s</span>
