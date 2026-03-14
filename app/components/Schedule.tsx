@@ -84,11 +84,12 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
     <div className='flex flex-col'>
       <h1>Schedule</h1>
       {busData.map((bus: any, index: number) => {
+        const routeName = bus.routeName;
         const peekAlloc = bus.peekAlloc;
         const nPeekAlloc = bus.nPeekAlloc;
         return (
           <div key={index} className="flex flex-col">
-            <p>배차간격</p>
+            <p>{routeName}</p>
             <p>평일: {peekAlloc}~{nPeekAlloc}분</p>
           </div>
         );
