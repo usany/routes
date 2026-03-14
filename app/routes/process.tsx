@@ -6,6 +6,7 @@ export const busCollection = {
   seoul: {
     '01': 1,
     '02': 2,
+    'A01': 3,
   },
   gwangneung: {
     '2': 241348004,
