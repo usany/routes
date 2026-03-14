@@ -1,6 +1,6 @@
 import { useSearchParams, Link } from "react-router";
 import { useState, useEffect, useCallback } from "react";
-import { Bus, BusFront, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
+import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 import Schedule from "~/components/schedule";
 
 export const busCollection = {
@@ -404,7 +404,8 @@ export default function Process() {
                           ) : null;
                         })()}
                         <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-lg z-10">
-                          <MonitorStop />
+                          {/* <MonitorStop /> */}
+                          <ChevronDown />
                         </div>
                       </div>
                     </div>
