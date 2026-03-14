@@ -433,15 +433,15 @@ export default function Process() {
         </div>
 
         <div className="mt-8 space-y-4">
-          <Link
+          {/* <Link
             to={destination === "Place One" ? "/place-one" : "/place-two"}
             className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
             Complete Journey
-          </Link>
+          </Link> */}
           <div className="mt-4">
             <Link
-              to={from === "Place One" ? "/place-one" : from === "Place Two" ? "/place-two" : "/"}
+              to={vehicle.includes('Gwangneung') ? "/place" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
               className="text-gray-600 hover:text-gray-800 underline"
             >
               ← Back to {from || "Home"}
