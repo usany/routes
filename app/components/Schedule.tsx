@@ -60,10 +60,15 @@ const Schedule = (vehicle: string) => {
         };
         fetchAllBuses();
     }, [selectedBus]);
-
+    
 return (
     <div>
         <h1>Schedule</h1>
+        {busData.map((bus, index) => (
+            <div key={index}>
+                <p>{bus.nPeekAlloc}</p>
+            </div>
+        ))}
     </div>
 )
 }
