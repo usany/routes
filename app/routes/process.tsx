@@ -162,6 +162,9 @@ export default function Process() {
         "",
         "회기역"
       ],
+      busThree: [
+        "경희대"
+      ],
       shuttleSeoul: [
         {clock: shuttleSeoul[0], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
         {clock: shuttleSeoul[1], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
