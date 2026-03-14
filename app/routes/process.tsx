@@ -202,6 +202,11 @@ export default function Process() {
               </button>
             </div>
           )}
+          {vehicle === 'busSeoulThree' && (
+            <div className='flex flex-col items-center'>
+              <div>장한평역-청량리역-경희대</div>
+            </div>
+          )}
           {vehicle.includes('shuttle') && (
             <div className='flex flex-col items-center'>
               <div>공휴일, 휴무일을 제외한 평일</div>
