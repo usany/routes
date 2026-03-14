@@ -86,12 +86,6 @@ export default function Process() {
     const res = data.response.msgBody.busArrivalList;
     return res;
   }
-  // const fetchBus = async (id: number) => {
-  //   const response = await fetch(`https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&routeId=${id}&format=json`);
-  //   const data = await response.json()
-  //   const res = data.response.msgBody.busArrivalList;
-  //   return res;
-  // }
 
   const fetchBusData = useCallback(async () => {
     const steps = getProcessSteps(vehicle);
