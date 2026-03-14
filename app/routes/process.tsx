@@ -1,7 +1,7 @@
 import { useSearchParams, Link } from "react-router";
 import { useState, useEffect, useCallback } from "react";
 import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
-import Schedule from "~/components/schedule";
+import Schedule from "../components/Schedule";
 
 export const busCollection = {
   seoul: {
@@ -444,7 +444,7 @@ export default function Process() {
               to={vehicle.includes('Gwangneung') ? "/place" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
               className="text-gray-600 hover:text-gray-800 underline"
             >
-              ← Back to {from || "Home"}
+              ← Back to {vehicle.includes('Gwangneung') ? "/place" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
             </Link>
           </div>
         </div>
