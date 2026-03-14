@@ -191,6 +191,11 @@ export default function Process() {
 
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold mb-6">{process[vehicle]}</h2>
+          {vehicle === 'busThree' && (
+            <div className='flex flex-col items-center'>
+              <div>장한평역-청량리역-경희대</div>
+            </div>
+          )}
           {vehicle.includes('bus') && !vehicle.includes('Seoul') && (
             <div className="text-center mb-4">
               <p className="text-sm text-gray-600 mb-2">
@@ -202,11 +207,6 @@ export default function Process() {
               >
                 Refresh Now
               </button>
-            </div>
-          )}
-          {vehicle === 'busThree' && (
-            <div className='flex flex-col items-center'>
-              <div>장한평역-청량리역-경희대</div>
             </div>
           )}
           {vehicle.includes('shuttle') && (
