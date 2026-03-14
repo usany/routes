@@ -1,4 +1,4 @@
-import { useSearchParams, Link } from "react-router";
+import { useSearchParams, Link, useNavigate } from "react-router";
 import { useState, useEffect, useCallback } from "react";
 import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 import Schedule from "../components/Schedule";
@@ -73,13 +73,26 @@ export const shuttleGlobal = [
   "18:00",
 ] as string[];
 export default function Process() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const vehicle = searchParams.get("vehicle");
   // const destination = searchParams.get("destination");
   // const from = searchParams.get("from");
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
   const [activeShuttleTab, setActiveShuttleTab] = useState<'seoul' | 'global'>('seoul');
+  
+  const handleShuttleTabChange = (tab: 'seoul' | 'global') => {
+    setActiveShuttleTab(tab);
+    const newVehicle = tab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal';
+    setSearchParams({ vehicle: newVehicle });
+  };
+  
+  useEffect(() => {
+    if (vehicle?.includes('shuttle')) {
+      setActiveShuttleTab(vehicle === 'shuttleSeoul' ? 'seoul' : 'global');
+    }
+  }, [vehicle]);
   
   const fetchStep = async (id: number) => {
     const response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
@@ -262,7 +275,7 @@ export default function Process() {
               </div>
               <div className="flex space-x-2 mb-6">
                 <button
-                  onClick={() => setActiveShuttleTab('seoul')}
+                  onClick={() => handleShuttleTabChange('seoul')}
                   className={`px-4 py-2 rounded-lg transition-colors ${
                     activeShuttleTab === 'seoul'
                       ? 'bg-blue-600 text-white'
@@ -272,7 +285,7 @@ export default function Process() {
                   서울-국제 셔틀
                 </button>
                 <button
-                  onClick={() => setActiveShuttleTab('global')}
+                  onClick={() => handleShuttleTabChange('global')}
                   className={`px-4 py-2 rounded-lg transition-colors ${
                     activeShuttleTab === 'global'
                       ? 'bg-blue-600 text-white'
