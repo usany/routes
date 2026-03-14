@@ -87,7 +87,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
         const nPeekAlloc = bus.nPeekAlloc;
         return (
           <div key={index}>
-            <p>{nPeekAlloc}</p>
+            <p>배차간격: 평일-{nPeekAlloc}</p>
           </div>
         );
       })}
