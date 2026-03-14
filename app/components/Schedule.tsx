@@ -87,13 +87,19 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
         const routeName = bus.routeName;
         const peekAlloc = bus.peekAlloc;
         const nPeekAlloc = bus.nPeekAlloc;
+        const satPeekAlloc = bus.satPeekAlloc;
+        const satNPeekAlloc = bus.satNPeekAlloc;
+        const sunPeekAlloc = bus.sunPeekAlloc;
+        const sunNPeekAlloc = bus.sunNPeekAlloc;
+        const wePeekAlloc = bus.wePeekAlloc;
+        const weNPeekAlloc = bus.weNPeekAlloc;
         return (
           <div key={index} className="flex flex-col">
             <p>{routeName}</p>
             <p>평일: {peekAlloc}~{nPeekAlloc}분</p>
-            <p>토요일: {peekAlloc}~{nPeekAlloc}분</p>
-            <p>일요일: {peekAlloc}~{nPeekAlloc}분</p>
-            <p>공휴일: {peekAlloc}~{nPeekAlloc}분</p>
+            <p>토요일: {satPeekAlloc}~{satNPeekAlloc}분</p>
+            <p>일요일: {sunPeekAlloc}~{sunNPeekAlloc}분</p>
+            <p>공휴일: {wePeekAlloc}~{weNPeekAlloc}분</p>
           </div>
         );
       })}
