@@ -125,6 +125,7 @@ export default function Process() {
         {clock: shuttleSeoul[3], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
         {clock: shuttleSeoul[4], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
       ],
+
       // bicycle: [
       //   "Go to the port",
       //   "Board the ship",
@@ -132,6 +133,7 @@ export default function Process() {
       //   "Disembark at port",
       //   "Arrive at " + destination
       // ],
+      
       busTo: [
         {id: 228000710 , nameKo: "외국어대학", nameEn: "Sasakomaru Square"},
         {id: 228000709 , nameKo: "생명과학대학", nameEn: "Life Science College.Industrial College"},
