@@ -74,10 +74,10 @@ export const shuttleGlobal = [
 ] as string[];
 export default function Process() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
   const vehicle = searchParams.get("vehicle");
-  // const destination = searchParams.get("destination");
+  // const navigate = useNavigate();
   // const from = searchParams.get("from");
+  // const destination = searchParams.get("destination");
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
   const [activeShuttleTab, setActiveShuttleTab] = useState<'seoul' | 'global'>('seoul');
