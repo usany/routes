@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, memo } from "react";
 import { ChevronDown, ChevronUp, Clock, Calendar } from "lucide-react";
 
 // Global flag to prevent multiple fetches across component remounts
-let globalHasFetched = false;
+// let globalHasFetched = false;
 
 export const busCollection = {
   seoul: {
@@ -74,8 +74,8 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
   }
 
   useEffect(() => {
-    console.log('Schedule useEffect triggered, globalHasFetched:', globalHasFetched);
-    if (globalHasFetched) return;
+    // console.log('Schedule useEffect triggered, globalHasFetched:', globalHasFetched);
+    // if (globalHasFetched) return;
     
     const fetchAllBuses = async () => {
       console.log('Starting fetch...');
@@ -85,7 +85,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
         const results = await Promise.all(promises);
         const allBusData = results.flat();
         setBusData(allBusData);
-        globalHasFetched = true;
+        // globalHasFetched = true;
         console.log('Fetch completed, globalHasFetched set to true');
       }
     };
