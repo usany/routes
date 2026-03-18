@@ -9,6 +9,8 @@ import {
 
 import type { Route } from "./+types/root";
 import { DockNavigation } from "./components/DockNavigation";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "../graphql/apollo-client";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -44,10 +46,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <>
+    <ApolloProvider client={client}>
       <Outlet />
       <DockNavigation />
-    </>
+    </ApolloProvider>
   );
 }
 

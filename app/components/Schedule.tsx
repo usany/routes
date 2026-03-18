@@ -1,5 +1,8 @@
 import { useEffect, useState, useRef, memo } from "react";
 import { ChevronDown, ChevronUp, Clock, Calendar } from "lucide-react";
+import { useQuery, gql } from "@apollo/client";
+import { GET_BUS_SCHEDULES } from "../../graphql/queries";
+import type { BusScheduleData } from "../../graphql/schema";
 
 // Global flag to prevent multiple fetches across component remounts
 // let globalHasFetched = false;
@@ -47,12 +50,17 @@ interface ScheduleProps {
 }
 
 const Schedule = ({ vehicle }: ScheduleProps) => {
-  const [busData, setBusData] = useState<any[]>([]);
   const [openAccordions, setOpenAccordions] = useState<Set<number>>(new Set());
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  // const hasFetched = useRef(false);
   const campus = vehicle.includes('Seoul') ? 'seoul' : vehicle.includes('Gwangneung') ? 'gwangneung' : 'global';
   const selectedBus = busCollection[campus];
+  
+  const routeIds = selectedBus ? Object.values(selectedBus) : [];
+  
+  const { data: busData, loading, error } = useQuery(GET_BUS_SCHEDULES, {
+    variables: { campus, routeIds },
+    skip: !selectedBus || routeIds.length === 0,
+  });
   
   const toggleAccordion = (index: number) => {
     setOpenAccordions(prev => {
@@ -66,36 +74,7 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
     });
   };
   
-  const fetchBus = async (id: number) => {
-    const response = await fetch(`https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&routeId=${id}&format=json`);
-    const data = await response.json();
-    const res = data.response.msgBody.busRouteInfoItem;
-    return res;
-  }
-
-  useEffect(() => {
-    // console.log('Schedule useEffect triggered, globalHasFetched:', globalHasFetched);
-    // if (globalHasFetched) return;
-    
-    const fetchAllBuses = async () => {
-      console.log('Starting fetch...');
-      if (selectedBus) {
-        const busRoutes = Object.values(selectedBus);
-        const promises = busRoutes.map((routeId: number) => fetchBus(routeId));
-        const results = await Promise.all(promises);
-        const allBusData = results.flat();
-        setBusData(allBusData);
-        // globalHasFetched = true;
-        console.log('Fetch completed, globalHasFetched set to true');
-      }
-    };
-    
-    fetchAllBuses();
-  }, []);
-  
-  console.log('Schedule render, busData length:', busData.length);
-  
-  const renderAccordionContent = (bus: any, index: number) => {
+  const renderAccordionContent = (bus: BusScheduleData, index: number) => {
     const routeName = bus.routeName;
     const upFirstTime = bus.upFirstTime;
     const upLastTime = bus.upLastTime;
@@ -197,7 +176,9 @@ const Schedule = ({ vehicle }: ScheduleProps) => {
             </div>
             
             <div className="p-4 overflow-y-auto max-h-[60vh] space-y-2">
-              {busData.map((bus: any, index: number) => renderAccordionContent(bus, index))}
+              {loading && <div className="text-center py-4">Loading bus schedules...</div>}
+              {error && <div className="text-center py-4 text-red-500">Error loading bus schedules: {error.message}</div>}
+              {busData?.busSchedules?.map((bus: any, index: number) => renderAccordionContent(bus, index))}
             </div>
           </div>
         </>
