@@ -10,7 +10,7 @@
     "graphql-server": "npx tsx server/index.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.8",
+    "@apollo/client": "^3.7.2",
     "@apollo/server": "^5.4.0",
     "@react-router/node": "7.12.0",
     "@react-router/serve": "7.12.0",
