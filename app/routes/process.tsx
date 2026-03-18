@@ -513,12 +513,6 @@ export default function Process() {
         </div>
 
         <div className="mt-8 space-y-4">
-          {/* <Link
-            to={destination === "Place One" ? "/place-one" : "/place-two"}
-            className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-          >
-            Complete Journey
-          </Link> */}
           <div className="mt-4">
             <Link
               to={vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
