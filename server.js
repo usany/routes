@@ -2,7 +2,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { serve } from '@hono/node-server';
-import { graphqlServer } from '@hono/graphql-server';
+import { graphql } from 'graphql';
 import { buildSchema } from 'graphql';
 import dotenv from 'dotenv';
 
@@ -53,11 +53,65 @@ const root = {
 };
 
 // GraphQL endpoint
-app.use('/graphql', graphqlServer({
-  schema,
-  rootResolver: root,
-  graphiql: true,
-}));
+app.post('/graphql', async (c) => {
+  try {
+    const body = await c.req.json();
+    const result = await graphql({
+      schema,
+      source: body.query,
+      rootValue: root,
+      variableValues: body.variables,
+    });
+    return c.json(result);
+  } catch (error) {
+    return c.json({ errors: [error.message] }, 400);
+  }
+});
+
+// GraphiQL interface
+app.get('/graphql', (c) => {
+  const graphiqlHtml = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>GraphiQL</title>
+        <style>
+          body { height: 100%; margin: 0; width: 100%; overflow: hidden; }
+          #graphiql { height: 100vh; }
+        </style>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/graphiql/graphiql.min.css" />
+      </head>
+      <body>
+        <div id="graphiql">Loading...</div>
+        <script src="https://unpkg.com/graphiql/graphiql.min.js" type="application/javascript"></script>
+        <script>
+          const graphQLFetcher = graphQLParams =>
+            fetch('/graphql', {
+              method: 'post',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(graphQLParams),
+            })
+              .then(response => response.json())
+              .catch(() => response.text());
+
+          ReactDOM.render(
+            React.createElement(GraphiQL, {
+              fetcher: graphQLFetcher,
+              defaultQuery: \`{
+                hello
+                busData
+              }\`,
+            }),
+            document.getElementById('graphiql'),
+          );
+        </script>
+      </body>
+    </html>
+  `;
+  return c.html(graphiqlHtml);
+});
 
 // Routes
 app.get('/', (c) => {
