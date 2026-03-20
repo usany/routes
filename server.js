@@ -1,77 +1,120 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { logger } from 'hono/logger';
+import { serve } from '@hono/node-server';
+import { graphqlServer } from '@hono/graphql-server';
+import { buildSchema } from 'graphql';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const app = express();
+const app = new Hono();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(helmet()); // Security headers
-app.use(cors({
+app.use('*', logger());
+app.use('*', cors({
   origin: ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true
-})); // Enable CORS for localhost:5173 and localhost:3000
-app.use(morgan('combined')); // HTTP request logger
-app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+}));
+
+// GraphQL Schema
+const schema = buildSchema(`
+  type Query {
+    hello: String
+    busData: String
+  }
+
+  type Mutation {
+    setMessage(message: String!): String
+  }
+`);
+
+// GraphQL Resolvers
+const root = {
+  hello: () => {
+    return 'Hello world!';
+  },
+  busData: async () => {
+    try {
+      const apiKey = process.env.USER;
+      const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=100100118`;
+      const response = await fetch(url);
+      const data = await response.text();
+      return data;
+    } catch (error) {
+      console.error('Error fetching bus data:', error);
+      return 'Error fetching bus data';
+    }
+  },
+  setMessage: ({ message }) => {
+    return message;
+  }
+};
+
+// GraphQL endpoint
+app.use('/graphql', graphqlServer({
+  schema,
+  rootResolver: root,
+  graphiql: true,
+}));
 
 // Routes
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to Express.js API',
+app.get('/', (c) => {
+  return c.json({
+    message: 'Welcome to Hono API with GraphQL',
     version: '1.0.0',
     status: 'running'
   });
 });
-app.get('/bus', async (req, res) => {
-  try {
-    // Replace with your actual API key and parameters
-    const apiKey = process.env.USER;
-    const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=100100118`
-    const response = await fetch(url);
-    const data = await response.text(); // API returns XML, so keep as text
 
-    // CORS is already handled by middleware
-    console.log(data)
-    res.send(data);
+app.get('/bus', async (c) => {
+  try {
+    const apiKey = process.env.USER;
+    const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=100100118`;
+    const response = await fetch(url);
+    const data = await response.text();
+    console.log(data);
+    return c.text(data);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error fetching bus data');
+    return c.text('Error fetching bus data', 500);
   }
 });
-app.get('/api/health', (req, res) => {
-  res.json({
+
+app.get('/api/health', (c) => {
+  return c.json({
     status: 'OK',
     timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
+// Error handling
+app.onError((err, c) => {
   console.error(err.stack);
-  res.status(500).json({
+  return c.json({
     error: 'Something went wrong!',
     message: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
-  });
+  }, 500);
 });
 
 // 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({
+app.notFound((c) => {
+  return c.json({
     error: 'Not Found',
     message: 'The requested resource was not found'
-  });
+  }, 404);
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Health check available at http://localhost:${PORT}/api/health`);
+console.log(`Server is running on port ${PORT}`);
+console.log(`GraphQL endpoint available at http://localhost:${PORT}/graphql`);
+console.log(`Health check available at http://localhost:${PORT}/api/health`);
+
+serve({
+  fetch: app.fetch,
+  port: PORT,
 });
 
 export default app;
