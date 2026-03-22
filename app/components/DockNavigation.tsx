@@ -77,31 +77,30 @@ export function DockNavigation() {
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-slate-800/90 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl px-6 py-3 shadow-2xl border border-slate-600/50 dark:border-slate-700/50">
-        <div className="flex items-center gap-3">
+    <div style={styles.container as React.CSSProperties}>
+      <div style={styles.dockWrapper as React.CSSProperties}>
+        <div style={styles.dockItems as React.CSSProperties}>
           {dockItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`
-                relative group flex flex-col items-center justify-center p-3 rounded-2xl transition-all duration-300 ease-out
-                ${isActive(item.path) 
-                  ? 'bg-gradient-to-br from-blue-500/30 to-blue-600/30 text-white scale-110 shadow-lg shadow-blue-500/25 border border-blue-400/30' 
-                  : 'text-gray-400 hover:text-white hover:bg-white/10 hover:scale-105 hover:shadow-xl hover:backdrop-blur-sm'
-                }
-              `}
+              style={{
+                ...styles.dockItemBase,
+                ...(isActive(item.path) 
+                  ? styles.dockItemActive 
+                  : styles.dockItemInactive)
+              } as React.CSSProperties}
               title={item.label}
             >
-              <div className="w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <div style={styles.iconWrapper as React.CSSProperties}>
                 {item.icon}
               </div>
-              <span className="text-xs mt-1">{item.label}</span>
+              <span style={styles.label as React.CSSProperties}>{item.label}</span>
               {isActive(item.path) && (
-                <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg shadow-white/50 animate-pulse" />
+                <div style={styles.activeIndicator as React.CSSProperties} />
               )}
               {!isActive(item.path) && (
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div style={styles.inactiveIndicator as React.CSSProperties} />
               )}
             </Link>
           ))}
@@ -110,3 +109,16 @@ export function DockNavigation() {
     </div>
   );
 }
+
+const styles = {
+  container: { position: 'fixed', bottom: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 50 },
+  dockWrapper: { backgroundColor: 'rgba(30, 41, 59, 0.9)', backdropFilter: 'blur(40px)', borderRadius: 24, paddingLeft: 24, paddingRight: 24, paddingTop: 12, paddingBottom: 12, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', borderWidth: 1, borderColor: 'rgba(71, 85, 105, 0.5)', borderStyle: 'solid' },
+  dockItems: { display: 'flex', alignItems: 'center', gap: 12 },
+  dockItemBase: { position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 16, transition: 'all 300ms ease-out', textDecoration: 'none' },
+  dockItemActive: { background: 'linear-gradient(to bottom right, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.3))', color: 'white', transform: 'scale(1.1)', boxShadow: '0 10px 15px -3px rgba(59, 130, 246, 0.25)', borderWidth: 1, borderColor: 'rgba(96, 165, 250, 0.3)', borderStyle: 'solid' },
+  dockItemInactive: { color: '#9ca3af' },
+  iconWrapper: { width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 300ms' },
+  label: { fontSize: 12, marginTop: 4 },
+  activeIndicator: { position: 'absolute', top: -4, left: '50%', transform: 'translateX(-50%)', width: 8, height: 8, backgroundColor: 'white', borderRadius: 9999, boxShadow: '0 10px 15px -3px rgba(255, 255, 255, 0.5)' },
+  inactiveIndicator: { position: 'absolute', inset: 0, background: 'linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), transparent)', borderRadius: 16, opacity: 0, transition: 'opacity 300ms' },
+};
