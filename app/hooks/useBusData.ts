@@ -7,7 +7,7 @@ export const useBusData = (pathname: string, getProcessSteps: (vehicleType: stri
   console.log(vehicle)
   const fetchStep = async (id: number) => {
     let response;
-    if (pathname.includes('Seoul')) {
+    if (pathname.includes('se')) {
       response = await fetch(`http://localhost:3000/bus/${id}`);
       const responseText = await response.text();
       return responseText;
