@@ -1,15 +1,16 @@
 import { useSearchParams, Link, useNavigate, useLocation } from "react-router";
-import { useState, useEffect, useCallback } from "react";
-import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 import Schedule from "../../components/Schedule";
-import { busCollection } from "../../components/busCollection";
+import RefreshCounter from "../../components/RefreshCounter";
 import { process } from "../../components/process";
 import { useBusData } from "../../hooks/useBusData";
+import Previous from "~/components/Previous";
+import BusTimeline from "../../components/BusTimeline";
 import { getProcessSteps } from "~/components/steps";
 
 export default function BusFrom() {
   const location = useLocation();
-  const vehicle = location.pathname.slice(4, location.pathname.length);
+  const pathname = location.pathname;
+  const vehicle = pathname.slice(4, pathname.length);
   const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   
   const steps = getProcessSteps(vehicle);
@@ -32,103 +33,11 @@ export default function BusFrom() {
       <div style={styles.mainContent as React.CSSProperties}>
         <div style={styles.processSection as React.CSSProperties}>
           <h2 style={styles.processTitle as React.CSSProperties}>{process[vehicle]}</h2>
-          {vehicle === 'busThree' && (
-            <div style={styles.infoContainer as React.CSSProperties}>
-              <div>장한평역-청량리역-경희대</div>
-              <div>운행시간: 배차간격: 평일 75분</div>
-            </div>
-          )}
-          {vehicle.includes('bus') && vehicle !== 'busThree' && vehicle.indexOf('busSeoul') === -1 && <Schedule vehicle={vehicle} />}
-          {vehicle.includes('bus') && (
-            <div style={styles.refreshContainer as React.CSSProperties}>
-              <p style={styles.refreshText as React.CSSProperties}>
-                Next data update in: <span style={styles.refreshCounter as React.CSSProperties}>{timeUntilNextFetch}s</span>
-              </p>
-              <button
-                onClick={fetchBusData}
-                style={styles.refreshButton as React.CSSProperties}
-              >
-                Refresh Now
-              </button>
-            </div>
-          )}
-          {vehicle === 'commute' && (
-            <div style={styles.infoContainer as React.CSSProperties}>
-              <div>학기 중 공휴일, 휴무일을 제외한 평일</div>
-              <div>요금: 무료</div>
-            </div>
-          )}
-          <div style={styles.timelineContainer as React.CSSProperties}>
-            <div style={styles.timelineLine as React.CSSProperties}></div>
-            <div style={styles.timelineContentBus as React.CSSProperties}>
-              {steps.map((step, index) => {
-                // For bus steps, we can access the fetched data from state
-                const stepId = typeof step !== 'string' && 'id' in step ? (step as any).id : null;
-                const fetchedData = stepId ? busData[stepId] : null;
-                return (
-                  <div key={index} style={styles.busStepContainer as React.CSSProperties}>
-                    <div style={styles.busIconWrapper as React.CSSProperties}>
-                      <div style={styles.busIconInner as React.CSSProperties}>
-                        {fetchedData && (() => {
-                          const targetDataList = fetchedData.filter((data: any) => data.locationNo1 === 1);
-                          return targetDataList.length > 0 ? (
-                            <div style={styles.busIncomingContainer as React.CSSProperties}>
-                              <div style={styles.busIncomingText as React.CSSProperties}>
-                                {targetDataList.map((data: any, idx: number) => (
-                                  <div key={idx}>{data.routeName}</div>
-                                ))}
-                              </div>
-                              <BusFront />
-                            </div>
-                          ) : null;
-                        })()}
-                        <div style={styles.busStopIcon as React.CSSProperties}>
-                          <ChevronDown />
-                        </div>
-                      </div>
-                    </div>
-                    <div style={styles.stepTextContainer as React.CSSProperties}>
-                      <p style={styles.stepTitle as React.CSSProperties}>
-                        {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
-                      </p>
-                      {fetchedData && (
-                        fetchedData.map((data: any, dataIndex: number) => {
-                          if (vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo' ) {
-                            console.log(data)
-                            return null
-                          }
-                          const routeName = data.routeName
-                          const predictTime1 = data.predictTime1;
-                          const locationNo1 = data.locationNo1
-                          const stationNm1 = data.stationNm1
-                          return (
-                            <p key={dataIndex} style={styles.busSubtitle as React.CSSProperties}>
-                              Bus data: {routeName}
-                              <br />
-                              {predictTime1 ? `${predictTime1}분 (${locationNo1} 정거장) ${stationNm1}` : '대기'}
-                              {index === steps.length - 1 && predictTime1 ? `(${stationNm1} ${locationNo1})` : ''}
-                            </p>
-                          )
-                        })
-                      )}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          {vehicle.includes('bus') && <Schedule vehicle={vehicle} />}
+          {vehicle.includes('bus') && <RefreshCounter timeUntilNextFetch={timeUntilNextFetch} onRefresh={fetchBusData} />}
+          <BusTimeline steps={steps} busData={busData} styles={styles} />
         </div>
-
-        <div style={styles.navContainer as React.CSSProperties}>
-          <div style={styles.navInner as React.CSSProperties}>
-            <Link
-              to={vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
-              style={styles.navLink as React.CSSProperties}
-            >
-              ← Back to {vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
-            </Link>
-          </div>
-        </div>
+        <Previous />
       </div>
     </div>
   );
@@ -149,12 +58,6 @@ const styles = {
   
   // Info text
   infoContainer: { display: 'flex', flexDirection: 'column', alignItems: 'center' },
-  
-  // Refresh section
-  refreshContainer: { textAlign: 'center', marginBottom: 16 },
-  refreshText: { fontSize: 14, color: '#4b5563', marginBottom: 8, margin: 0 },
-  refreshCounter: { fontWeight: 600, color: '#2563eb' },
-  refreshButton: { padding: '8px 16px', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: 8, fontSize: 14, transition: 'background-color 0.2s', cursor: 'pointer' },
 
   // Tabs
   tabContainer: { display: 'flex', gap: 8, marginBottom: 24, justifyContent: 'center' },
@@ -183,8 +86,4 @@ const styles = {
   busStopIcon: { width: 64, height: 64, backgroundColor: '#2563eb', color: 'white', borderRadius: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 18, zIndex: 10 },
   busSubtitle: { fontSize: 14, color: '#4b5563', marginTop: 4, margin: 0 },
 
-  // Link
-  navContainer: { marginTop: 32, display: 'flex', flexDirection: 'column', gap: 16 },
-  navInner: { marginTop: 16 },
-  navLink: { color: '#4b5563', textDecoration: 'underline' }
-};
+}
