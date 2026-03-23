@@ -9,7 +9,7 @@ export default function PlaceTwo() {
         <div style={styles.cardsContainer as React.CSSProperties}>
           <div style={styles.grid as React.CSSProperties}>
             <a
-              href="/process?vehicle=busTo"
+              href="/gl/busTo"
               style={{...styles.cardBase, ...styles.cardRed} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconRed} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -18,7 +18,7 @@ export default function PlaceTwo() {
               <span style={styles.cardText as React.CSSProperties}>외국어대학-사색의 광장</span>
             </a>
             <a
-              href="/process?vehicle=busFrom"
+              href="/gl/busFrom"
               style={{...styles.cardBase, ...styles.cardIndigo} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconIndigo} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,7 +27,7 @@ export default function PlaceTwo() {
               <span style={styles.cardText as React.CSSProperties}>사색의 광장-정문 건너편</span>
             </a>
             <a
-              href="/process?vehicle=commute"
+              href="/gl/commute"
               style={{...styles.cardBase, ...styles.cardPink} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconPink} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@ export default function PlaceTwo() {
               <span style={styles.cardText as React.CSSProperties}>영통역 통학버스</span>
             </a>
             <a
-              href="/process?vehicle=shuttleGlobal"
+              href="/gl/shuttleGlobal"
               style={{...styles.cardBase, ...styles.cardTeal} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconTeal} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
