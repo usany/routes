@@ -2,18 +2,14 @@ import { useSearchParams, Link, useNavigate, useLocation } from "react-router";
 import Schedule from "../../components/Schedule";
 import RefreshCounter from "../../components/RefreshCounter";
 import { process } from "../../components/process";
-import { useBusData } from "../../hooks/useBusData";
 import Previous from "~/components/Previous";
 import BusTimeline from "../../components/BusTimeline";
-import { getProcessSteps } from "~/components/steps";
 
-export default function BusFrom() {
+export default function BusN() {
   const location = useLocation();
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
-  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   
-  const steps = getProcessSteps(vehicle);
 
   if (!vehicle) {
     return (
@@ -33,9 +29,9 @@ export default function BusFrom() {
       <div style={styles.mainContent as React.CSSProperties}>
         <div style={styles.processSection as React.CSSProperties}>
           <h2 style={styles.processTitle as React.CSSProperties}>{process[vehicle]}</h2>
-          {vehicle.includes('bus') && <Schedule pathname={pathname} />}
-          {vehicle.includes('bus') && <RefreshCounter timeUntilNextFetch={timeUntilNextFetch} onRefresh={fetchBusData} />}
-          <BusTimeline steps={steps} busData={busData} styles={styles} />
+          {vehicle.includes('bus') && <Schedule />}
+          {vehicle.includes('bus') && <RefreshCounter />}
+          <BusTimeline />
         </div>
         <Previous />
       </div>
