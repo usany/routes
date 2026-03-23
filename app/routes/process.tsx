@@ -5,9 +5,9 @@ import Schedule from "../components/Schedule";
 
 export const busCollection = {
   seoul: {
-    '01': 1,
-    '02': 2,
-    'A01': 3,
+    '01': 105900003,
+    '02': 105900002,
+    'A01': 100000025,
   },
   gwangneung: {
     '2': 241348004,
