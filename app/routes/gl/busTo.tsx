@@ -15,7 +15,7 @@ export default function Process() {
     
   const fetchStep = async (id: number) => {
     let response
-    if (vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo') {
+    if (vehicle === 'busOne' || vehicle === 'busTwo') {
       response = await fetch(`http://localhost:3000/bus/${id}`)
       const responseText = await response.text();
       return responseText
@@ -31,15 +31,12 @@ export default function Process() {
     steps.forEach(async (step) => {
       if (typeof step !== 'string' && 'id' in step) {
         const data = await fetchStep((step as any).id);
-        const vehId1Match = data.match(/<arrmsg1>(.*?)<\/arrmsg1>/);
-        console.log(data)
-        console.log(vehId1Match)
+        // const vehId1Match = data.match(/<arrmsg1>(.*?)<\/arrmsg1>/);
+        // console.log(data)
+        // console.log(vehId1Match)
         setBusData(prev => ({ ...prev, [(step as any).id]: data }));
       }
     });
-    // const dataBus = await fetchBus()
-    // console.log(dataBus)
-    // Reset countdown when fetch completes
     setTimeUntilNextFetch(60);
   }, [vehicle]);
 
