@@ -14,8 +14,8 @@ export default [
   route("gw/busOne", "routes/gw/busOne.tsx"),
   route("gw/busTwo", "routes/gw/busTwo.tsx"),
   route("gl", "routes/gl/gl.tsx"),
-  route("gl/busOne", "routes/gl/busOne.tsx"),
-  route("gl/busTwo", "routes/gl/busTwo.tsx"),
-  route("gl/busThree", "routes/gl/busThree.tsx"),
+  route("gl/busTo", "routes/gl/busTo.tsx"),
+  route("gl/busFrom", "routes/gl/busFrom.tsx"),
+  route("gl/commute", "routes/gl/commute.tsx"),
   route("gl/shuttle", "routes/gl/shuttle.tsx"),
 ] satisfies RouteConfig;
