@@ -12,6 +12,11 @@ export default function Process() {
   const vehicle = location.pathname.slice(4, location.pathname.length);
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
+  
+  const getProcessSteps = (vehicleType: string) => {
+    return stepsCollection[vehicleType] || [];
+  };
+  const steps = getProcessSteps(vehicle);
   const fetchStep = async (id: number) => {
     let response
     if (vehicle === 'busOne' || vehicle === 'busTwo') {
@@ -25,7 +30,6 @@ export default function Process() {
     return res;
   }
   const fetchBusData = useCallback(async () => {
-    const steps = getProcessSteps(vehicle);
     steps.forEach(async (step) => {
       if (typeof step !== 'string' && 'id' in step) {
         const data = await fetchStep((step as any).id);
@@ -63,10 +67,6 @@ export default function Process() {
     }
   }, [vehicle, fetchBusData]);
 
-  const getProcessSteps = (vehicleType: string) => {
-    return stepsCollection[vehicleType] || [];
-  };
-
   if (!vehicle) {
     return (
       <div style={styles.errorContainer as React.CSSProperties}>
@@ -80,7 +80,6 @@ export default function Process() {
     );
   }
 
-  const steps = getProcessSteps(vehicle);
   return (
     <div style={styles.mainContainer as React.CSSProperties}>
       <div style={styles.mainContent as React.CSSProperties}>
