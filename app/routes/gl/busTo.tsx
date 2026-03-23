@@ -4,7 +4,7 @@ import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, St
 import Schedule from "../../components/Schedule";
 import { busCollection } from "../../components/busCollection";
 import { process } from "../../components/process";
-import { stepsCollection } from "~/components/steps";
+import { getProcessSteps } from "~/components/steps";
 
 export default function Process() {
   // const [searchParams, setSearchParams] = useSearchParams();
@@ -13,9 +13,6 @@ export default function Process() {
   const [busData, setBusData] = useState<{ [key: number]: any }>({});
   const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
   
-  const getProcessSteps = (vehicleType: string) => {
-    return stepsCollection[vehicleType] || [];
-  };
   const steps = getProcessSteps(vehicle);
   const fetchStep = async (id: number) => {
     let response

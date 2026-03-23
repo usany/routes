@@ -101,3 +101,7 @@ export const stepsCollection: { [key: string]: (string | { id: number; nameKo: s
     {id: 222000751, nameKo: "봉선사입구 종점 방면", nameEn: "Bongseonsa Entrance Terminal Direction"},
   ],
 };
+
+export const getProcessSteps = (vehicleType: string) => {
+  return stepsCollection[vehicleType] || [];
+};
