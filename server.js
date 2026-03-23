@@ -122,10 +122,10 @@ app.get('/', (c) => {
   });
 });
 
-app.get('/bus', async (c) => {
+app.get(`/bus/:id`, async (c) => {
   try {
     const apiKey = process.env.USER;
-    const id = c.req.query('id');
+    const id = c.req.param('id');
     const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
     const response = await fetch(url);
     const data = await response.text();
