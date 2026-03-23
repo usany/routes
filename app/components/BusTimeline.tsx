@@ -3,9 +3,11 @@ import BusDataDisplay from "./BusDataDisplay";
 import BusIncomingDisplay from "./BusIncomingDisplay";
 import { getProcessSteps } from "./steps";
 import { useBusData } from "~/hooks/useBusData";
+import { useLocation } from "react-router";
 
 
 export default function BusTimeline() {
+  const location = useLocation();
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
   const steps = getProcessSteps(vehicle);
