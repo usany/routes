@@ -7,7 +7,7 @@ import Previous from "~/components/Previous";
 import BusTimeline from "../../components/BusTimeline";
 import { getProcessSteps } from "~/components/steps";
 
-export default function BusJ() {
+export default function BusN() {
   const location = useLocation();
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
