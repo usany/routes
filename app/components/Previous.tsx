@@ -1,7 +1,8 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export default function Previous() {
-  const pathname = window.location.pathname;
+  const location = useLocation();
+  const pathname = location.pathname;
   return (
     <div style={styles.navContainer as React.CSSProperties}>
       <div style={styles.navInner as React.CSSProperties}>
