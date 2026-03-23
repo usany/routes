@@ -6,8 +6,8 @@ export default [
   route("gwangneung", "routes/gwangneungRoutes.tsx"),
   route("process", "routes/process.tsx"),
   route("se", "routes/se/se.tsx"),
-  route("se/busOne", "routes/se/busOne/busOne.tsx"),
-  route("se/busTwo", "routes/se/busTwo/busTwo.tsx"),
-  route("se/busThree", "routes/se/busThree/busThree.tsx"),
-  route("se/shuttle", "routes/se/shuttle/shuttle.tsx"),
+  route("se/busOne", "routes/se/busOne.tsx"),
+  route("se/busTwo", "routes/se/busTwo.tsx"),
+  route("se/busThree", "routes/se/busThree.tsx"),
+  route("se/shuttle", "routes/se/shuttle.tsx"),
 ] satisfies RouteConfig;
