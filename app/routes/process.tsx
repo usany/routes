@@ -471,7 +471,8 @@ export default function Process() {
                         </div>
                       </div>
                     </div>
-                    <div style={styles.stepTextContainer as React.CSSProperties}>
+                    {vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo' ? null : (
+                      <div style={styles.stepTextContainer as React.CSSProperties}>
                       <p style={styles.stepTitle as React.CSSProperties}>
                         {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                       </p>
@@ -492,6 +493,7 @@ export default function Process() {
                         })
                       )}
                     </div>
+                    )}
                   </div>
                 )
               })}
