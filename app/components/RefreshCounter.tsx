@@ -1,7 +1,9 @@
 import { useBusData } from "~/hooks/useBusData";
 import { getProcessSteps } from "./steps";
+import { useLocation } from "react-router";
 
 export default function RefreshCounter() {
+  const location = useLocation();
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
   const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
