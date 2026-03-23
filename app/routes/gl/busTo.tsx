@@ -8,6 +8,7 @@ import { process } from "../../components/process";
 import { useBusData } from "../../hooks/useBusData";
 import BackNavigation from "../../components/BackNavigation";
 import Previous from "~/components/Previous";
+import BusDataDisplay from "../../components/BusDataDisplay";
 
 export default function BusTo() {
   const location = useLocation();
@@ -71,20 +72,11 @@ export default function BusTo() {
                         {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                       </p>
                       {fetchedData && (
-                        fetchedData.map((data: any, dataIndex: number) => {
-                          const routeName = data.routeName
-                          const predictTime1 = data.predictTime1;
-                          const locationNo1 = data.locationNo1
-                          const stationNm1 = data.stationNm1
-                          return (
-                            <p key={dataIndex} style={styles.busSubtitle as React.CSSProperties}>
-                              Bus data: {routeName}
-                              <br />
-                              {predictTime1 ? `${predictTime1}분 (${locationNo1} 정거장) ${stationNm1}` : '대기'}
-                              {index === steps.length - 1 && predictTime1 ? `(${stationNm1} ${locationNo1})` : ''}
-                            </p>
-                          )
-                        })
+                        <BusDataDisplay 
+                          fetchedData={fetchedData} 
+                          isLastStep={index === steps.length - 1}
+                          styles={styles}
+                        />
                       )}
                     </div>
                   </div>
