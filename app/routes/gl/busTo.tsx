@@ -4,65 +4,16 @@ import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, St
 import Schedule from "../../components/Schedule";
 import { busCollection } from "../../components/busCollection";
 import { process } from "../../components/process";
+import { useBusData } from "../../hooks/useBusData";
 import { getProcessSteps } from "~/components/steps";
 
 export default function Process() {
   // const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const vehicle = location.pathname.slice(4, location.pathname.length);
-  const [busData, setBusData] = useState<{ [key: number]: any }>({});
-  const [timeUntilNextFetch, setTimeUntilNextFetch] = useState(60);
+  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   
   const steps = getProcessSteps(vehicle);
-  const fetchStep = async (id: number) => {
-    let response
-    if (vehicle === 'busOne' || vehicle === 'busTwo') {
-      response = await fetch(`http://localhost:3000/bus/${id}`)
-      const responseText = await response.text();
-      return responseText
-    }
-    response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
-    const data = await response.json()
-    const res = data.response.msgBody.busArrivalList;
-    return res;
-  }
-  const fetchBusData = useCallback(async () => {
-    steps.forEach(async (step) => {
-      if (typeof step !== 'string' && 'id' in step) {
-        const data = await fetchStep((step as any).id);
-        // const vehId1Match = data.match(/<arrmsg1>(.*?)<\/arrmsg1>/);
-        // console.log(data)
-        // console.log(vehId1Match)
-        setBusData(prev => ({ ...prev, [(step as any).id]: data }));
-      }
-    });
-    setTimeUntilNextFetch(60);
-  }, [vehicle]);
-
-  useEffect(() => {
-    // if (vehicle === 'busTo' || vehicle === 'busFrom' || vehicle === 'busGwangneungOne' || vehicle === 'busGwangneungTwo') {
-    if (vehicle?.includes('bus')) {
-      // Fetch immediately
-      fetchBusData();
-      
-      // Then fetch every minute (60000 milliseconds)
-      const interval = setInterval(fetchBusData, 60000);
-
-      // Countdown timer - update every second
-      const countdownInterval = setInterval(() => {
-        setTimeUntilNextFetch(prev => {
-          if (prev <= 1) return 60; // Reset when reaching 0
-          return prev - 1;
-        });
-      }, 1000);
-
-      // Cleanup intervals on component unmount
-      return () => {
-        clearInterval(interval);
-        clearInterval(countdownInterval);
-      };
-    }
-  }, [vehicle, fetchBusData]);
 
   if (!vehicle) {
     return (
