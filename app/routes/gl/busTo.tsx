@@ -88,10 +88,6 @@ export default function BusTo() {
                       </p>
                       {fetchedData && (
                         fetchedData.map((data: any, dataIndex: number) => {
-                          if (vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo' ) {
-                            console.log(data)
-                            return null
-                          }
                           const routeName = data.routeName
                           const predictTime1 = data.predictTime1;
                           const locationNo1 = data.locationNo1
