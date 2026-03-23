@@ -9,6 +9,7 @@ import { useBusData } from "../../hooks/useBusData";
 import BackNavigation from "../../components/BackNavigation";
 import Previous from "~/components/Previous";
 import BusDataDisplay from "../../components/BusDataDisplay";
+import BusIncomingDisplay from "../../components/BusIncomingDisplay";
 
 export default function BusTo() {
   const location = useLocation();
@@ -49,19 +50,9 @@ export default function BusTo() {
                   <div key={index} style={styles.busStepContainer as React.CSSProperties}>
                     <div style={styles.busIconWrapper as React.CSSProperties}>
                       <div style={styles.busIconInner as React.CSSProperties}>
-                        {fetchedData && (() => {
-                          const targetDataList = fetchedData.filter((data: any) => data.locationNo1 === 1);
-                          return targetDataList.length > 0 ? (
-                            <div style={styles.busIncomingContainer as React.CSSProperties}>
-                              <div style={styles.busIncomingText as React.CSSProperties}>
-                                {targetDataList.map((data: any, idx: number) => (
-                                  <div key={idx}>{data.routeName}</div>
-                                ))}
-                              </div>
-                              <BusFront />
-                            </div>
-                          ) : null;
-                        })()}
+                        {fetchedData && (
+                          <BusIncomingDisplay fetchedData={fetchedData} styles={styles} />
+                        )}
                         <div style={styles.busStopIcon as React.CSSProperties}>
                           <ChevronDown />
                         </div>
