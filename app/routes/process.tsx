@@ -476,13 +476,15 @@ export default function Process() {
                         </div>
                       </div>
                     </div>
-                    {vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo' ? null : (
-                      <div style={styles.stepTextContainer as React.CSSProperties}>
+                    <div style={styles.stepTextContainer as React.CSSProperties}>
                       <p style={styles.stepTitle as React.CSSProperties}>
                         {typeof step === 'string' ? step : 'nameKo' in step ? `${step.nameKo} (${step.nameEn})` : JSON.stringify(step)}
                       </p>
                       {fetchedData && (
                         fetchedData.map((data: any, dataIndex: number) => {
+                          if (vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo' ) {
+                            return null
+                          }
                           const routeName = data.routeName
                           const predictTime1 = data.predictTime1;
                           const locationNo1 = data.locationNo1
@@ -498,7 +500,6 @@ export default function Process() {
                         })
                       )}
                     </div>
-                    )}
                   </div>
                 )
               })}
