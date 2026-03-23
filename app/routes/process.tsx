@@ -194,12 +194,12 @@ export default function Process() {
   const getProcessSteps = (vehicleType: string) => {
     const steps: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
       busSeoulOne: [
-        "회기역",
-        "경희대입구", 
-        "의료원입구사거리",
-        "경희대",
-        "경희대입구",
-        "회기역"
+        {id: 105900027, nameKo: "회기역", nameEn: "Hoegei Station"},
+        {id: 105900051, nameKo: "경희대입구", nameEn: "Kyunghee University Entrance"}, 
+        {id: 105900001, nameKo: "의료원입구사거리", nameEn: "Medical Center Entrance Intersection"},
+        {id: 105900050, nameKo: "경희대", nameEn: "Kyunghee University"},
+        {id: 105000184, nameKo: "경희대입구", nameEn: "Kyunghee University Entrance"},
+        {id: 105900027, nameKo: "회기역", nameEn: "Hoegei Station"}
       ],
       busSeoulTwo: [
         {id: 105900027, nameKo: "회기역", nameEn: "Hoegei Station"},
