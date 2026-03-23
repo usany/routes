@@ -95,7 +95,12 @@ export default function Process() {
   }, [vehicle]);
   
   const fetchStep = async (id: number) => {
-    const response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
+    let response
+    if (vehicle === 'busSeoulOne' || vehicle === 'busSeoulTwo') {
+      response = await fetch(`http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${id}&busRouteId=105900003`)
+    } else {
+      response = await fetch(`https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=2285040a0cf11847ddd747ab39d20eb723e34a91e8d5fb404b9034c8e6e71d97&stationId=${id}&format=json`);
+    }
     const data = await response.json()
     const res = data.response.msgBody.busArrivalList;
     return res;
