@@ -1,5 +1,6 @@
 import { useSearchParams, Link, useLocation } from "react-router";
 import { useState } from "react";
+import { getProcessSteps } from "~/components/steps";
 
 export const shuttleSeoul = [
   "07:10",
@@ -22,30 +23,6 @@ export default function Shuttle() {
   // const vehicle = searchParams.get("vehicle") || "shuttleSeoul";
   // const [activeShuttleTab, setActiveShuttleTab] = useState<'seoul' | 'global'>('seoul');
   const activeShuttleTab = useLocation().pathname.includes('se') ? 'seoul' : 'global';
-  const getProcessSteps = (vehicleType: string) => {
-    const steps: { [key: string]: { clock: string; routeKo: string; routeEn: string }[] } = {
-      shuttleSeoul: [
-        {clock: shuttleSeoul[0], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
-        {clock: shuttleSeoul[1], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
-        {clock: shuttleSeoul[2], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
-        {clock: shuttleSeoul[3], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
-        {clock: shuttleSeoul[4], routeKo: "온실-외국어대학-생명과학대학-사색의 광장", routeEn: "온실-외국어대학-생명과학대학-사색의 광장"},
-      ],
-      shuttleGlobal: [
-        {clock: shuttleGlobal[0], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
-        {clock: shuttleGlobal[1], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
-        {clock: shuttleGlobal[2], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
-        {clock: shuttleGlobal[3], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
-        {clock: shuttleGlobal[4], routeKo: "사색의 광장-생명과학대학-체육대학-온실", routeEn: "Sasakomaru Square - Life Science College - Physical Education College - Greenhouse"},
-      ],
-    };
-    return steps[vehicleType] || [];
-  };
-
-  // const handleShuttleTabChange = (tab: 'seoul' | 'global') => {
-  //   setActiveShuttleTab(tab);
-  // };
-
   const steps = getProcessSteps(activeShuttleTab === 'seoul' ? 'shuttleSeoul' : 'shuttleGlobal');
   return (
     <div style={styles.mainContainer as React.CSSProperties}>
