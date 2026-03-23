@@ -11,8 +11,8 @@ export default function BusN() {
   const location = useLocation();
   const pathname = location.pathname;
   const vehicle = pathname.slice(4, pathname.length);
-  const steps = getProcessSteps(vehicle);
-  const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
+  // const steps = getProcessSteps(vehicle);
+  // const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   
 
   if (!vehicle) {
