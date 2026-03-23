@@ -21,7 +21,6 @@ export default function BusTimeline() {
           // For bus steps, we can access the fetched data from state
           const stepId = typeof step !== 'string' && 'id' in step ? (step as any).id : null;
           const fetchedData = stepId ? busData[stepId] : null;
-          console.log(fetchedData)
           return (
             <div key={index} style={styles.busStepContainer as React.CSSProperties}>
               <div style={styles.busIconWrapper as React.CSSProperties}>
