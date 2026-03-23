@@ -9,7 +9,8 @@ import { getProcessSteps } from "~/components/steps";
 
 export default function BusTo() {
   const location = useLocation();
-  const vehicle = location.pathname.slice(4, location.pathname.length);
+  const pathname = location.pathname;
+  const vehicle = pathname.slice(4, pathname.length);
   const { busData, timeUntilNextFetch, fetchBusData } = useBusData(vehicle, getProcessSteps);
   
   const steps = getProcessSteps(vehicle);
@@ -122,10 +123,10 @@ export default function BusTo() {
         <div style={styles.navContainer as React.CSSProperties}>
           <div style={styles.navInner as React.CSSProperties}>
             <Link
-              to={vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
+              to={pathname.includes('gw') ? "/gw" : pathname.includes('se') ? "/se" : "/gl"}
               style={styles.navLink as React.CSSProperties}
             >
-              ← Back to {vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
+              ← Back to {pathname.includes('gw') ? "/gw" : pathname.includes('se') ? "/se" : "/gl"}
             </Link>
           </div>
         </div>
