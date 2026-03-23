@@ -18,7 +18,6 @@ export const shuttleGlobal = [
   "16:40",
   "18:00",
 ] as string[];
-
 export const stepsCollection: { [key: string]: (string | { id: number; nameKo: string; nameEn: string } | { time: string; routeKo: string; routeEn: string } | { clock: string; routeKo: string; routeEn: string })[] } = {
   busOne: [
     {id: 105900027, nameKo: "회기역", nameEn: "Hoegei Station"},
