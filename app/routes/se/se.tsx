@@ -18,7 +18,7 @@ export default function PlaceOne() {
               <span style={styles.cardText as React.CSSProperties}>회기역-경희대 01번</span>
             </a>
             <a
-              href="/process?vehicle=busSeoulTwo"
+              href="/se/busTwo"
               style={{...styles.cardBase, ...styles.cardGreen} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconGreen} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,7 +27,7 @@ export default function PlaceOne() {
               <span style={styles.cardText as React.CSSProperties}>회기역-외대앞역 02번</span>
             </a>
             <a
-              href="/process?vehicle=busThree"
+              href="/se/busThree"
               style={{...styles.cardBase, ...styles.cardYellow} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconYellow} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,7 +36,7 @@ export default function PlaceOne() {
               <span style={styles.cardText as React.CSSProperties}>자율주행 A01번</span>
             </a>
             <a
-              href="/process?vehicle=shuttleSeoul"
+              href="/se/shuttle"
               style={{...styles.cardBase, ...styles.cardPurple} as React.CSSProperties}
             >
               <svg style={{...styles.iconBase, ...styles.iconPurple} as React.CSSProperties} fill="none" stroke="currentColor" viewBox="0 0 24 24">
