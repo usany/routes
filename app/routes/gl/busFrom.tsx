@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 import Schedule from "../../components/Schedule";
 
-export default function Process() {
+export default function BusFrom() {
   const [searchParams, setSearchParams] = useSearchParams();
   const vehicle = searchParams.get("vehicle") || "busSeoulTwo";
   const [busData, setBusData] = useState<{ [key: number]: any }>({});

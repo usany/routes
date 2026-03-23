@@ -2,56 +2,9 @@ import { useSearchParams, Link, useNavigate } from "react-router";
 import { useState, useEffect, useCallback } from "react";
 import { Bus, BusFront, ChevronDown, MonitorStop, PersonStanding, SquareStop, StopCircle } from "lucide-react";
 import Schedule from "../../components/Schedule";
+import { busCollection } from "../../components/busCollection";
+import { process } from "../../components/process";
 
-export const busCollection = {
-  seoul: {
-    '01': 105900003,
-    '02': 105900002,
-    'A01': 100000025,
-  },
-  gwangneung: {
-    '2': 241348004,
-    '21': 222000170,
-    '2-2A': 241348002,
-    '2A': 241348001,
-    '2-2': 241348005
-  },
-  global: {
-    'M5107': 234001243,
-    '5100': 200000115,
-    '1112(reserved)': 200000333,
-    '1112': 234000016,
-    'P9242(퇴근)': 233000335,
-    '28-3': 241425038,
-    '900': 200000010,
-    '7-2': 200000040,
-    '53': 241425010,
-    '18-1': 241425018,
-    '9-1': 200000186,
-    '1560A': 234000884,
-    '7000': 200000112,
-    '9': 200000103,
-    '310': 200000024,
-    '5': 200000076,
-    'M5107(예약)': 200000335,
-    '1550-1(예약)': 223000151,
-    '1560B': 228000433,
-    '1550-1': 234000324,
-    '32': 241425007
-  },
-}
-export const process = {
-  busSeoulOne: '회기역-경희대 01번',
-  busSeoulTwo: '회기역-외대앞역 02번',
-  busThree: '자율주행 A01번',
-  busTo: '외국어대학-사색의 광장',
-  busFrom: '사색의 광장-정문 건너편',
-  shuttleSeoul: '서울-국제 셔틀버스',
-  shuttleGlobal: '국제-서울 셔틀버스',
-  commute: '영통역 통학버스',
-  busGwangneungOne: '봉선사입구-내산정 방면',
-  busGwangneungTwo: '봉선사입구-종점 방면',
-} as { [key: string]: string };
 export const commuteTime = [
   "8:45am",
   "10:00am",
