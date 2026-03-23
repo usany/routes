@@ -6,7 +6,6 @@ import RefreshCounter from "../../components/RefreshCounter";
 import { busCollection } from "../../components/busCollection";
 import { process } from "../../components/process";
 import { useBusData } from "../../hooks/useBusData";
-import BackNavigation from "../../components/BackNavigation";
 import Previous from "~/components/Previous";
 import BusDataDisplay from "../../components/BusDataDisplay";
 import BusIncomingDisplay from "../../components/BusIncomingDisplay";
