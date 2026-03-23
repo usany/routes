@@ -74,16 +74,7 @@ export default function BusTo() {
           </div>
         </div>
 
-        <div style={styles.navContainer as React.CSSProperties}>
-          <div style={styles.navInner as React.CSSProperties}>
-            <Link
-              to={vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
-              style={styles.navLink as React.CSSProperties}
-            >
-              ← Back to {vehicle.includes('Gwangneung') ? "/gwangneung" : vehicle.includes('Seoul') ? "/place-one" : "/place-two"}
-            </Link>
-          </div>
-        </div>
+        <Previous />
       </div>
     </div>
   );
