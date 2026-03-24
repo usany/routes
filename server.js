@@ -113,6 +113,78 @@ app.get('/graphql', (c) => {
   return c.html(graphiqlHtml);
 });
 
+// XML to JSON conversion function using built-in methods
+function xmlToJson(xmlString) {
+  // Simple XML to JSON parser using regex and string manipulation
+  function parseElement(xml) {
+    const result = {};
+    
+    // Remove XML declaration and comments
+    xml = xml.replace(/<\?xml[^>]*\?>/g, '').replace(/<!--[\s\S]*?-->/g, '');
+    
+    // Extract attributes from opening tag
+    const attrMatch = xml.match(/<(\w+)([^>]*?)>/);
+    if (!attrMatch) return xml.trim();
+    
+    const tagName = attrMatch[1];
+    const attributes = attrMatch[2];
+    
+    // Parse attributes
+    if (attributes.trim()) {
+      const attrs = {};
+      const attrRegex = /(\w+)="([^"]*)"/g;
+      let match;
+      while ((match = attrRegex.exec(attributes)) !== null) {
+        attrs[match[1]] = match[2];
+      }
+      if (Object.keys(attrs).length > 0) {
+        result['@attributes'] = attrs;
+      }
+    }
+    
+    // Extract content between opening and closing tags
+    const contentMatch = xml.match(new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)</${tagName}>`));
+    if (!contentMatch) {
+      // Self-closing tag or empty
+      return result;
+    }
+    
+    let content = contentMatch[1].trim();
+    
+    // Check if content contains child elements
+    if (content.includes('<')) {
+      // Parse child elements
+      const childElements = {};
+      const tagRegex = /<(\w+)([^>]*?)>([\s\S]*?)<\/\1>/g;
+      let match;
+      
+      while ((match = tagRegex.exec(content)) !== null) {
+        const childTag = match[1];
+        const childContent = match[3];
+        const parsedChild = parseElement(`<${childTag}${match[2]}>${childContent}</${childTag}>`);
+        
+        if (childElements[childTag]) {
+          if (!Array.isArray(childElements[childTag])) {
+            childElements[childTag] = [childElements[childTag]];
+          }
+          childElements[childTag].push(parsedChild);
+        } else {
+          childElements[childTag] = parsedChild;
+        }
+      }
+      
+      Object.assign(result, childElements);
+    } else if (content) {
+      // Text content only
+      return content;
+    }
+    
+    return result;
+  }
+  
+  return parseElement(xmlString);
+}
+
 // Routes
 app.get('/', (c) => {
   return c.json({
@@ -128,9 +200,12 @@ app.get(`/bus/:id`, async (c) => {
     const id = c.req.param('id');
     const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
     const response = await fetch(url);
-    const data = await response.text();
-    console.log(data);
-    return c.text(data);
+    const xmlData = await response.text();
+    
+    // Convert XML to JSON using built-in methods
+    const jsonData = xmlToJson(xmlData);
+    console.log(jsonData);
+    return c.json(jsonData);
   } catch (error) {
     console.error(error);
     return c.text('Error fetching bus data', 500);
