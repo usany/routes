@@ -204,8 +204,7 @@ app.get(`/bus/:id`, async (c) => {
     
     // Convert XML to JSON using built-in methods
     const jsonData = xmlToJson(xmlData);
-    console.log(jsonData);
-    return c.json(jsonData);
+    return c.json({response: jsonData});
   } catch (error) {
     console.error(error);
     return c.text('Error fetching bus data', 500);
