@@ -199,6 +199,54 @@ app.get(`/bus/:id`, async (c) => {
     const apiKey = process.env.USER;
     const id = c.req.param('id');
     const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
+    const data = await fetch(url);
+    const xmlData = await data.text();
+    
+    // Convert XML to JSON using built-in methods
+    const res = xmlToJson(xmlData);
+    return c.json({response: res});
+  } catch (error) {
+    console.error(error);
+    return c.text('Error fetching bus data', 500);
+  }
+});
+app.get(`/seArrival/:id`, async (c) => {
+  try {
+    const apiKey = process.env.USER;
+    const id = c.req.param('id');
+    const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
+    const data = await fetch(url);
+    const xmlData = await data.text();
+    
+    // Convert XML to JSON using built-in methods
+    const res = xmlToJson(xmlData);
+    return c.json({response: res});
+  } catch (error) {
+    console.error(error);
+    return c.text('Error fetching bus data', 500);
+  }
+});
+app.get(`/gyArrival/:id`, async (c) => {
+  try {
+    const apiKey = process.env.USER;
+    const id = c.req.param('id');
+    const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
+    const response = await fetch(url);
+    const xmlData = await response.text();
+    
+    // Convert XML to JSON using built-in methods
+    const jsonData = xmlToJson(xmlData);
+    return c.json({response: jsonData});
+  } catch (error) {
+    console.error(error);
+    return c.text('Error fetching bus data', 500);
+  }
+});
+app.get(`/gyRoute/:id`, async (c) => {
+  try {
+    const apiKey = process.env.USER;
+    const id = c.req.param('id');
+    const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
     const response = await fetch(url);
     const xmlData = await response.text();
     
