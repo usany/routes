@@ -231,9 +231,9 @@ app.get(`/gyArrival/:id`, async (c) => {
     const apiKey = process.env.USER;
     const id = c.req.param('id');
     const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${id}&format=json`;
-    const res = await fetch(url);
-    const data = await res.json();
-    return c.json(data);
+    const data = await fetch(url);
+    const res = await data.json();
+    return c.json(res);
   } catch (error) {
     console.error(error);
     return c.text('Error fetching bus data', 500);
@@ -244,9 +244,9 @@ app.get(`/gyRoute/:id`, async (c) => {
     const apiKey = process.env.USER;
     const id = c.req.param('id');
     const url = `https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=${apiKey}&routeId=${id}&format=json`;
-    const res = await fetch(url);
-    const data = await res.json();
-    return c.json(data);
+    const data = await fetch(url);
+    const res = await data.json();
+    return c.json(res);
   } catch (error) {
     console.error(error);
     return c.text('Error fetching bus data', 500);
