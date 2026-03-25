@@ -230,7 +230,7 @@ app.get(`/gyArrival/:id`, async (c) => {
   try {
     const apiKey = process.env.USER;
     const id = c.req.param('id');
-    const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
+    const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${id}&format=json`;
     const response = await fetch(url);
     const xmlData = await response.text();
     
@@ -246,7 +246,7 @@ app.get(`/gyRoute/:id`, async (c) => {
   try {
     const apiKey = process.env.USER;
     const id = c.req.param('id');
-    const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
+    const url = `https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=${apiKey}&routeId=${id}&format=json`;
     const response = await fetch(url);
     const xmlData = await response.text();
     
