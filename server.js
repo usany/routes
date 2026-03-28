@@ -33,7 +33,7 @@ const schema = buildSchema(`
 // GraphQL Resolvers
 const root = {
   hello: () => {
-    return 'Hello world!';
+    return 'welcome!';
   },
   busData: async () => {
     try {
