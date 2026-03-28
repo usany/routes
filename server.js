@@ -217,8 +217,6 @@ app.get(`/seArrival/:id`, async (c) => {
     const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${id}`;
     const data = await fetch(url);
     const xmlData = await data.text();
-    
-    // Convert XML to JSON using built-in methods
     const res = xmlToJson(xmlData);
     return c.json({response: res});
   } catch (error) {
