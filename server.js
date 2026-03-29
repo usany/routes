@@ -91,11 +91,7 @@ const schema = buildSchema(`
 `);
 
 // GraphQL Resolvers
-const root = {
-  hello: () => {
-    return 'welcome!';
-  },
-  
+const root = {  
   seoulBusArrival: async ({ routeId }) => {
     try {
       const apiKey = process.env.USER;
