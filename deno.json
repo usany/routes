@@ -4,6 +4,7 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
-    "graphql-yoga": "npm:graphql-yoga@^3.7.3"
+    "@std/dotenv": "jsr:@std/dotenv@1",
+    "graphql-yoga": "npm:graphql-yoga@^3.7.3" 
   }
 }
