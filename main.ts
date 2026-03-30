@@ -96,7 +96,7 @@ const yoga = createYoga({
       Query: {
         seoulBusArrival: async ({ routeId }: { routeId: String }) => {
     try {
-      const apiKey = process.env.USERID;
+      const apiKey = env.USERID;
       const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${routeId}`;
       const response = await fetch(url);
       const xmlData = await response.text();
@@ -132,7 +132,7 @@ const yoga = createYoga({
 
   gyeonggiBusArrival: async ({ stationId }: { stationId: String }) => {
     try {
-      const apiKey = process.env.USERID;
+      const apiKey = env.USERID;
       const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
       const response = await fetch(url);
       const data = await response.json();
@@ -157,7 +157,7 @@ const yoga = createYoga({
 
   gyeonggiBusRoute: async ({ routeId }: { routeId: String }) => {
     try {
-      const apiKey = process.env.USERID;
+      const apiKey = env.USERID;
       const url = `https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=${apiKey}&routeId=${routeId}&format=json`;
       const response = await fetch(url);
       const data = await response.json();
