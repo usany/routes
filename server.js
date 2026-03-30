@@ -75,7 +75,6 @@ const schema = buildSchema(`
     resultMsg: String
   }
 
-
   type GyeonggiBody {
     busArrivalList: [GyeonggiBusArrivalInfo]
   }
