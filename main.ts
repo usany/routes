@@ -292,7 +292,7 @@ const yoga = createYoga({
   //       },
       };
     }
-  },
+  }),
 
   gyeonggiBusRoute: async ({ routeId }: { routeId: String }) => {
     try {
