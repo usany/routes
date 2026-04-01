@@ -104,7 +104,7 @@ const schema = `
   }
 `;
 const root = {  
-  seoulBusArrival: async ({ routeId }) => {
+  seoulBusArrival: async (_: any, { routeId }) => {
     try {
       const apiKey = env.USERID;
       const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${routeId}`;
@@ -147,7 +147,7 @@ const root = {
     }
   },
 
-  gyeonggiBusArrival: async ({ stationId }) => {
+  gyeonggiBusArrival: async (_: any, { stationId }) => {
     try {
       const apiKey = env.USERID;
       const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
@@ -174,7 +174,7 @@ const root = {
     }
   },
 
-  gyeonggiBusRoute: async ({ routeId }) => {
+  gyeonggiBusRoute: async (_: any, { routeId }) => {
     console.log(routeId)
     try {
       const apiKey = env.USERID;
