@@ -3,12 +3,13 @@ import xmlToJson from './xmlToJson.ts'
 import { load } from "@std/dotenv";
 // import { load } from "jsr:@std/dotenv";
 
-const env = await load({
+const env = await load()
+// const env = await load({
   // optional: choose a specific path (defaults to ".env")
   // envPath: ".env.local",
   // optional: also export to the process environment (so Deno.env can read it)
-  export: true,
-});
+  // export: true,
+// });
 const schema = `
   type BusArrivalInfo {
     arrmsg1: String
