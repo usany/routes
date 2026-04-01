@@ -5,7 +5,7 @@ import { load } from "@std/dotenv";
 
 const env = await load({
   // optional: choose a specific path (defaults to ".env")
-  envPath: ".env.local",
+  // envPath: ".env.local",
   // optional: also export to the process environment (so Deno.env can read it)
   export: true,
 });
