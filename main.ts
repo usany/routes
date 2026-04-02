@@ -18,6 +18,7 @@ const schema = `
     lastTm: String
     term: String
     stId: String
+    stNm: String
   }
 
   type GyeonggiBusArrivalInfo {
