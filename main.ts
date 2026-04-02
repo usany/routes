@@ -109,7 +109,7 @@ const root = {
       const response = await fetch(url);
       const xmlData = await response.text();
       const jsonData = xmlToJson(xmlData);
-      console.log('Fetched Seoul bus data:', jsonData.msgBody.itemList[0]);
+      // console.log('Fetched Seoul bus data:', jsonData.msgBody.itemList[0]);
       // Transform XML data to match GraphQL schema
       return {
         response: {
