@@ -13,11 +13,10 @@ const schema = `
   type BusArrivalInfo {
     arrmsg1: String
     rtNm: String
-    vehId1: String
     firstTm: String
     lastTm: String
     term: String
-    stId: String
+    stNm: String
   }
 
   type GyeonggiBusArrivalInfo {
@@ -110,7 +109,7 @@ const root = {
       const response = await fetch(url);
       const xmlData = await response.text();
       const jsonData = xmlToJson(xmlData);
-      console.log('Fetched Seoul bus data:', jsonData.msgBody.itemList[0]);
+      // console.log('Fetched Seoul bus data:', jsonData.msgBody.itemList[0]);
       // Transform XML data to match GraphQL schema
       return {
         response: {
@@ -120,11 +119,10 @@ const root = {
               return ({
               arrmsg1: item.arrmsg1 || '',
               rtNm: item.rtNm || '',
-              vehId1: item.vehId1 || '',
               firstTm: item.firstTm || '',
               lastTm: item.lastTm || '',
               term: item.term || '',
-              stId: item.stId || ''
+              stNm: item.stNm || ''
             })}) || []
           }
         }
