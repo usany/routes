@@ -1,126 +1,82 @@
-import { Image } from "expo-image";
-import { Platform, StyleSheet } from "react-native";
-
-import { ExternalLink } from "@/components/external-link";
-import ParallaxScrollView from "@/components/parallax-scroll-view";
+import { Button } from "@/components/Button";
+import { SettingsModal } from "@/components/settings-modal";
 import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { Collapsible } from "@/components/ui/collapsible";
-import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Fonts } from "@/constants/theme";
+import { useLanguage } from "@/contexts/language-context";
+import { useTheme } from "@/contexts/theme-context";
+import { MaterialIcons } from "@expo/vector-icons";
+import { usePathname, useRouter } from "expo-router";
+import { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function TabTwoScreen() {
+export default function Place() {
+  const [showSettings, setShowSettings] = useState(false);
+  const { colors } = useTheme();
+  const { text } = useLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}
-        >
-          Gwangneung
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>
-        This app includes example code to help you get started.
-      </ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{" "}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the
-          web version, press <ThemedText type="defaultSemiBold">w</ThemedText>{" "}
-          in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the{" "}
-          <ThemedText type="defaultSemiBold">@2x</ThemedText> and{" "}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to
-          provide files for different screen densities
-        </ThemedText>
-        <Image
-          source={require("@/assets/images/react-logo.png")}
-          style={{ width: 100, height: 100, alignSelf: "center" }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{" "}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook
-          lets you inspect what the user&apos;s current color scheme is, and so
-          you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{" "}
-          <ThemedText type="defaultSemiBold">
-            components/HelloWave.tsx
-          </ThemedText>{" "}
-          component uses the powerful{" "}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{" "}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The{" "}
-              <ThemedText type="defaultSemiBold">
-                components/ParallaxScrollView.tsx
-              </ThemedText>{" "}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <View style={styles.contentWrapper}>
+        <ThemedText style={styles.title}>{text('app.title.gwangneung')}</ThemedText>
+        <Button onSettingsPress={() => setShowSettings(true)} />
+        <View style={styles.cardsContainer}>
+          <View style={styles.grid}>
+            <TouchableOpacity
+              style={[styles.cardBase, styles.cardBlue]}
+              onPress={() => router.push(`${pathname}/busN` as any)}
+            >
+              {/* <Ionicons name="information-circle" size={48} color="#2563eb" style={styles.iconBase} />
+              <Ionicons name="walk" size={48} color="#2563eb" style={styles.iconBase} /> */}
+              <MaterialIcons name="directions-bus" size={53.5} color="#2563eb" style={styles.iconBase}/>
+              {/* <MaterialIcons name="subway" size={48} color="#2563eb" />
+              <MaterialIcons name="tram" size={48} color="#2563eb" />
+              <MaterialIcons name="commute" size={48} color="#2563eb" />
+              <MaterialIcons name="directions-car" size={48} color="#2563eb" />
+              <MaterialIcons name="directions-bike" size={48} color="#2563eb" /> */}
+              <Text style={styles.cardText}>{text('bus.bongsa_nesan')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.cardBase, styles.cardGreen]}
+              onPress={() => router.push(`${pathname}/busJ` as any)}
+            >
+              {/* <Ionicons name="home" size={48} color="#16a34a" style={styles.iconBase} /> */}
+              <MaterialIcons name="directions-bus-filled" size={53.5} color="#16a34a" style={styles.iconBase}/>
+              {/* <MaterialIcons name="directions-walk" size={48} color="#16a34a" />
+              <MaterialIcons name="directions-run" size={48} color="#16a34a" />
+              <MaterialIcons name="directions-transit" size={48} color="#16a34a" />
+              <MaterialIcons name="directions-subway" size={48} color="#16a34a" />
+              <MaterialIcons name="directions-ferry" size={48} color="#16a34a" />
+              <MaterialIcons name="directions-railway" size={48} color="#16a34a" /> */}
+              <Text style={styles.cardText}>{text('bus.bongsa_terminal')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <SettingsModal
+          visible={showSettings} 
+          onClose={() => setShowSettings(false)} />
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
+  container: { flex: 1, alignItems: 'center', justifyContent: 'flex-start', paddingTop: 96 },
+  contentWrapper: { alignItems: 'center', width: '100%' },
+  title: { fontSize: 36, fontWeight: 'bold', marginBottom: 32 },
+  cardsContainer: { flexDirection: 'column', gap: 24, width: '100%', maxWidth: 800 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 16, width: '100%', justifyContent: 'center' },
+  cardBase: { flexDirection: 'column', alignItems: 'center', padding: 17, borderRadius: 8, width: '45%', minWidth: 140 },
+  cardBlue: { backgroundColor: '#dbeafe' },
+  cardGreen: { backgroundColor: '#dcfce7' },
+  iconBase: { marginBottom: 8 },
+  cardText: { fontWeight: 500, textAlign: 'center', width: '100%' },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
+  settingsButton: {
+    padding: 8,
+    borderRadius: 20,
   },
 });

@@ -1,55 +1,36 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { ThemedText } from "@/components/themed-text";
+import { useTheme } from "@/contexts/theme-context";
+import { Ionicons } from "@expo/vector-icons";
+import { Pressable, StyleSheet, View } from "react-native";
 
-type Props = {
-  label: string;
-  theme?: 'primary';
-};
+interface Props {
+  onSettingsPress: () => void;
+}
 
-export default function Button({ label, theme  }: Props) {
-  if (theme === 'primary') {
-  return (
-      <View
-        style={[
-          styles.buttonContainer,
-          { borderWidth: 4, borderColor: '#ffd33d', borderRadius: 18 },
-        ]}>
-        <Pressable
-          style={[styles.button, { backgroundColor: '#fff' }]}
-          onPress={() => alert('You pressed a button.')}>
-          <Text style={[styles.buttonLabel, { color: '#25292e' }]}>{label}</Text>
-        </Pressable>
-      </View>
-    );
-  }
+export function Button({ onSettingsPress }: Props) {
+  const { colors } = useTheme();
 
   return (
-    <View style={styles.buttonContainer}>
-      <Pressable style={styles.button} onPress={() => alert('You pressed a button.')}>
-        <Text style={styles.buttonLabel}>{label}</Text>
+    <View style={styles.headerButtons}>
+      <ThemedText style={styles.subtitle}>
+        어디로 떠나볼까요?
+      </ThemedText>
+      <Pressable onPress={onSettingsPress} style={styles.settingsButton}>
+        <Ionicons name="settings-outline" size={24} color={colors.text} />
       </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    width: 320,
-    height: 68,
-    marginHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 3,
-  },
-  button: {
-    borderRadius: 10,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+  headerButtons: {
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
-  buttonLabel: {
-    color: '#fff',
-    fontSize: 16,
+  subtitle: { fontSize: 18, color: '#4b5563' },
+  settingsButton: {
+    padding: 8,
+    borderRadius: 20,
   },
 });

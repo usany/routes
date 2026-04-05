@@ -1,3 +1,4 @@
+import { useTheme } from "@/contexts/theme-context";
 import {
   DarkTheme,
   DefaultTheme,
@@ -7,30 +8,63 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
+import { CampusProvider } from "@/contexts/campus-context";
 import { LanguageProvider } from "@/contexts/language-context";
 import { ThemeProvider } from "@/contexts/theme-context";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+function NavigationThemeWrapper({ children }: { children: React.ReactNode }) {
+  const { isDark, colors } = useTheme();
+  
+  const customLightTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: colors.background,
+      card: colors.card,
+      text: colors.text,
+      border: colors.border,
+      primary: colors.primary,
+    },
+  };
+  const customDarkTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: colors.background,
+      card: colors.card,
+      text: colors.text,
+      border: colors.border,
+      primary: colors.primary,
+    },
+  };
 
+  return (
+    <NavigationThemeProvider value={isDark ? customDarkTheme : customLightTheme}>
+      {children}
+    </NavigationThemeProvider>
+  );
+}
+
+export default function RootLayout() {
   return (
     <LanguageProvider>
       <ThemeProvider>
-        <NavigationThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="se/shuttleSeoul" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="modal"
-              options={{ presentation: "modal", title: "Modal" }}
-            />
-          </Stack>
-          <StatusBar style="auto" />
-        </NavigationThemeProvider>
+        <CampusProvider>
+          <NavigationThemeWrapper>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="se/shuttleSeoul" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="modal"
+                options={{ presentation: "modal", title: "Modal" }}
+              />
+            </Stack>
+            <StatusBar style="auto" />
+          </NavigationThemeWrapper>
+        </CampusProvider>
       </ThemeProvider>
     </LanguageProvider>
   );

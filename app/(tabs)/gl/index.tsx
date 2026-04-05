@@ -1,126 +1,87 @@
-import { Image } from "expo-image";
-import { Platform, StyleSheet } from "react-native";
-
-import { ExternalLink } from "@/components/external-link";
-import ParallaxScrollView from "@/components/parallax-scroll-view";
+import { Button } from "@/components/Button";
+import { SettingsModal } from "@/components/settings-modal";
 import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { Collapsible } from "@/components/ui/collapsible";
-import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Fonts } from "@/constants/theme";
-
-export default function TabTwoScreen() {
+import { useLanguage } from "@/contexts/language-context";
+import { useTheme } from "@/contexts/theme-context";
+import { Ionicons } from "@expo/vector-icons";
+import { usePathname, useRouter } from "expo-router";
+import { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+export default function PlaceTwo() {
+  const [showSettings, setShowSettings] = useState(false);
+  const { colors } = useTheme();
+  const { text } = useLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}
-        >
-          Global
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>
-        This app includes example code to help you get started.
-      </ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{" "}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the
-          web version, press <ThemedText type="defaultSemiBold">w</ThemedText>{" "}
-          in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the{" "}
-          <ThemedText type="defaultSemiBold">@2x</ThemedText> and{" "}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to
-          provide files for different screen densities
-        </ThemedText>
-        <Image
-          source={require("@/assets/images/react-logo.png")}
-          style={{ width: 100, height: 100, alignSelf: "center" }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{" "}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook
-          lets you inspect what the user&apos;s current color scheme is, and so
-          you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{" "}
-          <ThemedText type="defaultSemiBold">
-            components/HelloWave.tsx
-          </ThemedText>{" "}
-          component uses the powerful{" "}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{" "}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The{" "}
-              <ThemedText type="defaultSemiBold">
-                components/ParallaxScrollView.tsx
-              </ThemedText>{" "}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <View style={styles.contentWrapper}>
+        <ThemedText style={styles.title}>{text('app.title.global')}</ThemedText>
+        <Button onSettingsPress={() => setShowSettings(true)} />
+        <View style={styles.cardsContainer}>
+          <View style={styles.grid}>
+            <TouchableOpacity
+              style={[styles.cardBase, styles.cardRed]}
+              onPress={() => router.push(`${pathname}/busTo` as any)}
+            >
+              <Ionicons name="arrow-down" size={48} color="#dc2626" style={styles.iconBase} />
+              {/* <Ionicons name="arrow-forward" size={48} color="#dc2626" style={styles.iconBase} /> */}
+              <Text style={styles.cardText}>{text('bus.foreign_lang')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.cardBase, styles.cardIndigo]}
+              onPress={() => router.push(`${pathname}/busFrom` as any)}
+            >
+              <Ionicons name="arrow-up" size={48} color="#4f46e5" style={styles.iconBase} />
+              {/* <Ionicons name="arrow-back" size={48} color="#4f46e5" style={styles.iconBase} /> */}
+              <Text style={styles.cardText}>{text('bus.sasak')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.cardBase, styles.cardPink]}
+              onPress={() => router.push(`${pathname}/commute` as any)}
+            >
+              <Ionicons name="location" size={48} color="#db2777" style={styles.iconBase} />
+              <Text style={styles.cardText}>{text('bus.yeongtong')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.cardBase, styles.cardTeal]}
+              onPress={() => router.push(`${pathname}/shuttle` as any)}
+            >
+              <Ionicons name="swap-horizontal" size={48} color="#0d9488" style={styles.iconBase} />
+              {/* <Ionicons name="home" size={48} color="#0d9488" style={styles.iconBase} /> */}
+              <Text style={styles.cardText}>{text('bus.global_shuttle')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <SettingsModal
+          visible={showSettings} 
+          onClose={() => setShowSettings(false)} />
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
+  container: { flex: 1, alignItems: 'center', justifyContent: 'flex-start', paddingTop: 96 },
+  contentWrapper: { alignItems: 'center', width: '100%' },
+  title: { fontSize: 36, fontWeight: 'bold', marginBottom: 32 },
+  subtitle: { fontSize: 18, color: '#4b5563', marginBottom: 32 },
+  cardsContainer: { flexDirection: 'column', gap: 24, width: '100%', maxWidth: 800 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 16, width: '100%', justifyContent: 'center' },
+  cardBase: { flexDirection: 'column', alignItems: 'center', padding: 17, borderRadius: 8, width: '45%', minWidth: 140 },
+  cardRed: { backgroundColor: '#fee2e2' },
+  cardIndigo: { backgroundColor: '#e0e7ff' },
+  cardPink: { backgroundColor: '#fce7f3' },
+  cardTeal: { backgroundColor: '#ccfbf1' },
+  iconBase: { marginBottom: 8 },
+  cardText: { fontWeight: 500, textAlign: 'center' },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
+  settingsButton: {
+    padding: 8,
+    borderRadius: 20,
   },
 });
