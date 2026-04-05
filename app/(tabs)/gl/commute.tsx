@@ -1,3 +1,4 @@
+import { ThemedText } from "@/components/themed-text";
 import { usePathname } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import Previous from "../../components/Previous";
@@ -27,10 +28,10 @@ export default function Commute() {
     <View style={styles.mainContainer}>
       <View style={styles.mainContent}>
         <View style={styles.processSection}>
-          <Text style={styles.processTitle}>{process[vehicle]}</Text>
+          <ThemedText style={styles.processTitle}>{process[vehicle]}</ThemedText>
           <View style={styles.infoContainer}>
-            <Text>학기 중 공휴일, 휴무일을 제외한 평일</Text>
-            <Text>요금: 무료</Text>
+            <ThemedText>학기 중 공휴일, 휴무일을 제외한 평일</ThemedText>
+            <ThemedText>요금: 무료</ThemedText>
           </View>
           <View style={styles.timelineContainer}>
             <View style={styles.timelineLine}></View>
