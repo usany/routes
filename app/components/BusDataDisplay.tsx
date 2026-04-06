@@ -20,7 +20,6 @@ export default function BusDataDisplay({ fetchedData, isLastStep, index }: BusDa
   //   return <ThemedText>로딩 중...</ThemedText>;
   // }
   if (isuseSeoulBus) {
-    console.log(fetchedData[index])
     const arrmsg = fetchedData[index].arrmsg1;
     const routeName = fetchedData[index].rtNm;
     const predictTime1 = arrmsg.indexOf('분') < 0 ? arrmsg : arrmsg.slice(0, arrmsg.indexOf('분')+1);
