@@ -2,14 +2,12 @@ import { Button } from "@/components/Button";
 import { SettingsModal } from "@/components/settings-modal";
 import { ThemedText } from "@/components/themed-text";
 import { useLanguage } from "@/contexts/language-context";
-import { useTheme } from "@/contexts/theme-context";
 import { Ionicons } from "@expo/vector-icons";
 import { usePathname, useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function PlaceTwo() {
   const [showSettings, setShowSettings] = useState(false);
-  const { colors } = useTheme();
   const { text } = useLanguage();
   const router = useRouter();
   const pathname = usePathname();
