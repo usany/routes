@@ -150,8 +150,6 @@ const root = {
       const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
       const data = await fetch(url);
       const res = await data.json();
-      // console.log('Fetched Gyeonggi bus data:', stationId);
-      // console.log('Fetched Gyeonggi bus data:', res.response.msgBody.busArrivalList);
       return res;
     } catch (error) {
       console.error('Error fetching Gyeonggi bus arrival data:', error);
@@ -205,7 +203,6 @@ const root = {
       };
     }
   },
-
   // busArrival: async ({ routeId }) => {
   //   try {
   //     const apiKey = process.env.USER;
