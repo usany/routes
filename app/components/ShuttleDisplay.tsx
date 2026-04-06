@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   tabInactive: { paddingVertical: 8, paddingHorizontal: 16, borderRadius: 8, backgroundColor: '#e5e7eb' },
   tabActiveText: { color: 'white', fontWeight: '600' },
   tabInactiveText: { color: '#374151', fontWeight: '600' },
-  timelineContainer: { position: 'relative' },
+  timelineContainer: { position: 'relative', width: '100%' },
   timelineLine: { position: 'absolute', left: 60, top: 0, bottom: 0, width: 4, backgroundColor: '#d1d5db' },
   timelineContentShuttle: { position: 'relative', flexDirection: 'column', gap: 32, paddingLeft: 32 },
   stepContainer: { flexDirection: 'row', alignItems: 'center', gap: 24 },
