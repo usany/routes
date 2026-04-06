@@ -1,4 +1,20 @@
-export default function xmlToJson(xmlString) {
+interface ParsedXmlData {
+  [key: string]: any;
+  msgBody?: {
+    itemList?: Array<{
+      arrmsg1?: string;
+      rtNm?: string;
+      firstTm?: string;
+      lastTm?: string;
+      term?: string;
+      stNm?: string;
+      [key: string]: any;
+    }>;
+    [key: string]: any;
+  };
+}
+
+export default function xmlToJson(xmlString: string): ParsedXmlData {
   // Simple XML to JSON parser using regex and string manipulation
   function parseElement(xml) {
     const result = {};

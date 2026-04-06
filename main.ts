@@ -1,14 +1,101 @@
 import { createSchema, createYoga } from 'graphql-yoga'
-import xmlToJson from './xmlToJson.ts'
-import { load } from "@std/dotenv";
-// import { load } from "jsr:@std/dotenv";
-const env = await load()
-// const env = await load({
-  // optional: choose a specific path (defaults to ".env")
-  // envPath: ".env.local",
-  // optional: also export to the process environment (so Deno.env can read it)
-  // export: true,
-// });
+import dotenv from 'dotenv'
+import express from 'express'
+import cors from 'cors'
+import helmet from 'helmet'
+
+dotenv.config()
+interface ParsedXmlData {
+  [key: string]: any;
+  msgBody?: {
+    itemList?: Array<{
+      arrmsg1?: string;
+      rtNm?: string;
+      firstTm?: string;
+      lastTm?: string;
+      term?: string;
+      stNm?: string;
+      [key: string]: any;
+    }>;
+    [key: string]: any;
+  };
+}
+
+export function xmlToJson(xmlString: string): ParsedXmlData {
+  // Simple XML to JSON parser using regex and string manipulation
+  function parseElement(xml: string) {
+    const result = {};
+
+    // Remove XML declaration and comments
+    xml = xml.replace(/<\?xml[^>]*\?>/g, "").replace(/<!--[\s\S]*?-->/g, "");
+
+    // Extract attributes from opening tag
+    const attrMatch = xml.match(/<(\w+)([^>]*?)>/);
+    if (!attrMatch) return xml.trim();
+
+    const tagName = attrMatch[1];
+    const attributes = attrMatch[2];
+
+    // Parse attributes
+    if (attributes.trim()) {
+      const attrs = {};
+      const attrRegex = /(\w+)="([^"]*)"/g;
+      let match;
+      while ((match = attrRegex.exec(attributes)) !== null) {
+        attrs[match[1]] = match[2];
+      }
+      if (Object.keys(attrs).length > 0) {
+        result["@attributes"] = attrs;
+      }
+    }
+
+    // Extract content between opening and closing tags
+    const contentMatch = xml.match(
+      new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)</${tagName}>`),
+    );
+    if (!contentMatch) {
+      // Self-closing tag or empty
+      return result;
+    }
+
+    let content = contentMatch[1].trim();
+
+    // Check if content contains child elements
+    if (content.includes("<")) {
+      // Parse child elements
+      const childElements = {};
+      const tagRegex = /<(\w+)([^>]*?)>([\s\S]*?)<\/\1>/g;
+      let match;
+
+      while ((match = tagRegex.exec(content)) !== null) {
+        const childTag = match[1];
+        const childContent = match[3];
+        const parsedChild = parseElement(
+          `<${childTag}${match[2]}>${childContent}</${childTag}>`,
+        );
+
+        if (childElements[childTag]) {
+          if (!Array.isArray(childElements[childTag])) {
+            childElements[childTag] = [childElements[childTag]];
+          }
+          childElements[childTag].push(parsedChild);
+        } else {
+          childElements[childTag] = parsedChild;
+        }
+      }
+
+      Object.assign(result, childElements);
+    } else if (content) {
+      // Text content only
+      return content;
+    }
+
+    return result;
+  }
+
+  return parseElement(xmlString);
+}
+
 const schema = `
   type BusArrivalInfo {
     arrmsg1: String
@@ -104,7 +191,7 @@ const schema = `
 const root = {  
   seoulBusArrival: async (_: any, { routeId }) => {
     try {
-      const apiKey = env.USERID;
+      const apiKey = process.env.USERID;
       const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${routeId}`;
       const response = await fetch(url);
       const xmlData = await response.text();
@@ -146,10 +233,12 @@ const root = {
 
   gyeonggiBusArrival: async (_: any, { stationId }) => {
     try {
-      const apiKey = env.USERID;
+      const apiKey = process.env.USERID;
       const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
       const data = await fetch(url);
       const res = await data.json();
+      // console.log('Fetched Gyeonggi bus data:', stationId);
+      // console.log('Fetched Gyeonggi bus data:', res.response.msgBody.busArrivalList);
       return res;
     } catch (error) {
       console.error('Error fetching Gyeonggi bus arrival data:', error);
@@ -172,7 +261,7 @@ const root = {
   gyeonggiBusRoute: async (_: any, { routeId }) => {
     console.log(routeId)
     try {
-      const apiKey = env.USERID;
+      const apiKey = process.env.USERID;
       const url = `https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=${apiKey}&routeId=${routeId}&format=json`;
       const response = await fetch(url);
       const apiData = await response.json();
@@ -187,6 +276,7 @@ const root = {
       //     }
       //   }
       // };
+      // console.log(pass.response.msgBody.busRouteInfoItem.routeName)
       return apiData
     } catch (error) {
       console.error('Error fetching Gyeonggi bus route data:', error);
@@ -203,6 +293,7 @@ const root = {
       };
     }
   },
+
   // busArrival: async ({ routeId }) => {
   //   try {
   //     const apiKey = process.env.USER;
@@ -221,76 +312,98 @@ const root = {
   // }
 };
 
+export default function handler(req, res) {
+  const yoga = createYoga({
+    schema: createSchema({
+      typeDefs: schema,
+      resolvers: {
+        Query: {
+          ...root,
+        },
+        Mutation: {
+          setMessage: ({ message }) => {
+            return message;
+          }
+        }
+      },
+    }),
+    graphqlEndpoint: '/graphql'
+  })
+
+  return yoga(req, res)
+}
+
+// Start server with Express, CORS, and Helmet
+const app = express()
+
+// Create GraphQL Yoga instance
 const yoga = createYoga({
   schema: createSchema({
     typeDefs: schema,
     resolvers: {
       Query: {
         ...root,
-  //       seoulBusArrival: async ({ routeId }: { routeId: String }) => {
-  //   try {
-  //     const apiKey = env.USERID;
-  //     const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${routeId}`;
-  //     const response = await fetch(url);
-  //     const xmlData = await response.text();
-  //     const jsonData = xmlToJson(xmlData);
-
-  //     return {
-  //       resultCode: jsonData.ServiceResult?.msgHeader?.resultCode || "ERROR",
-  //       resultMsg:
-  //         jsonData.ServiceResult?.msgHeader?.resultMsg ||
-  //         "Failed to fetch data",
-  //       itemList:
-  //         jsonData.ServiceResult?.msgBody?.itemList?.map((item) => ({
-  //           plateNo: item.plainNo || "",
-  //           remainTime: item.arrTime || "",
-  //           remainingStops: item.remainSeatCnt || "",
-  //           location: item.staNm || "",
-  //           lowPlate: item.lowPlate || "",
-  //           busType: item.busType || "",
-  //           isLast: item.isLast || "",
-  //           isFullFlag: item.isFullFlag || "",
-  //         })) || [],
-  //     };
-  //   } catch (error) {
-  //     console.error("Error fetching Seoul bus data:", error);
-  //     return {
-  //       resultCode: "ERROR",
-  //       resultMsg: "Error fetching Seoul bus data",
-  //       itemList: [],
-  //     };
-  //   }
-  // },
-
-  // gyeonggiBusArrival: async ({ stationId }: { stationId: String }) => {
-  //   try {
-  //     const apiKey = env.USERID;
-  //     const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-  //     return data;
-  //   } catch (error) {
-  //     console.error("Error fetching Gyeonggi bus arrival data:", error);
-  //     return {
-  //       response: {
-  //         header: {
-  //           resultCode: "ERROR",
-  //           resultMsg: "Error fetching Gyeonggi bus arrival data",
-  //         },
-  //         body: {
-  //           items: {
-  //             item: [],
-  //           },
-  //         },
-  //       },
       },
-    }
+      Mutation: {
+        setMessage: ({ message }) => {
+          return message;
+        }
+      }
+    },
   }),
   graphqlEndpoint: '/graphql'
 })
- 
-Deno.serve(yoga, {
-  onListen({ hostname, port }) {
-    console.log(`Listening on http://${hostname}:${port}/${yoga.graphqlEndpoint}`)
-  }
+
+const yogaRouter = express.Router()
+
+// GraphiQL specific CSP configuration
+yogaRouter.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        'style-src': ["'self'", 'unpkg.com'],
+        'script-src': ["'self'", 'unpkg.com', "'unsafe-inline'"],
+        'img-src': ["'self'", 'raw.githubusercontent.com']
+      }
+    }
+  })
+)
+const corsOptions = {
+	// origin: '*',
+	// origin: 'http://localhost:5173',
+	// origin: 'https://usany.github.io',
+	// origin: 'https://usany-github-io.vercel.app',
+	// origin: 'https://khusan.co.kr',
+	origin: [
+		"http://localhost:8081",
+	],
+	optionsSuccessStatus: 200,
+};
+
+yogaRouter.use(cors(corsOptions))
+
+yogaRouter.use(yoga)
+
+// By adding the GraphQL Yoga router before the global helmet middleware,
+// you can be sure that the global CSP configuration will not be applied to the GraphQL Yoga endpoint
+app.use(yoga.graphqlEndpoint, yogaRouter)
+
+// Add the global CSP configuration for the rest of your server
+app.use(helmet())
+
+app.use(cors(corsOptions))
+
+// Add a root route to fix "Cannot GET /" error
+app.get('/', (req, res) => {
+  res.send('GraphQL Server is running! Visit /graphql for the GraphQL playground.')
+})
+app.get('/graphql', (req, res) => {
+  console.log(req)
+  console.log(res)
+})
+
+const port = process.env.PORT || 4000
+
+app.listen(port, () => {
+  console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`)
 })
