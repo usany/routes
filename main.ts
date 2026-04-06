@@ -189,7 +189,6 @@ const root = {
       //     }
       //   }
       // };
-      // console.log(pass.response.msgBody.busRouteInfoItem.routeName)
       return apiData
     } catch (error) {
       console.error('Error fetching Gyeonggi bus route data:', error);
