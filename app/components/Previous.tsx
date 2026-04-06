@@ -17,7 +17,6 @@ export default function Previous() {
   )
 }
 const styles = StyleSheet.create({
-  // Link
   navContainer: { marginTop: 32, gap: 16 },
   navInner: { marginTop: 16 },
   navLink: { color: '#4b5563', textDecorationLine: 'underline' }
