@@ -179,7 +179,7 @@ const schema = `
   type Query {
     hello: String
     seoulBusArrival(routeId: Int!): SeoulBusResponse
-    gyeonggiBusArrival(stationId: Int!): GyeonggiBusResponse
+    gyeonggiBusArrival(stationIds: [Int!]!): [GyeonggiBusResponse]
     gyeonggiBusRoute(routeId: Int!): GyeonggiRouteResponse
     busArrival(routeId: Int!): String
   }
@@ -231,16 +231,22 @@ const root = {
     }
   },
 
-  gyeonggiBusArrival: async (_: any, { stationId }) => {
+  gyeonggiBusArrival: async (_: any, { stationIds }) => {
     try {
       const apiKey = process.env.USERID;
-      const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
-      const data = await fetch(url);
-      const res = await data.json();
-      return res;
+      const results = [];
+      
+      for (const stationId of stationIds) {
+        const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
+        const data = await fetch(url);
+        const res = await data.json();
+        results.push(res);
+      }
+      
+      return results;
     } catch (error) {
       console.error('Error fetching Gyeonggi bus arrival data:', error);
-      return {
+      return stationIds.map(() => ({
         response: {
           header: {
             resultCode: 'ERROR',
@@ -252,7 +258,7 @@ const root = {
             }
           }
         }
-      };
+      }));
     }
   },
 
