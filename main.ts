@@ -154,6 +154,20 @@ const schema = `
   type GyeonggiRouteBody {
     busRouteInfoItem: GyeonggiBusRouteInfo
   }
+  type GyeonggiBusRouteInfo {
+    routeName: String
+    upFirstTime: String
+    upLastTime: String
+    peekAlloc: String
+    nPeekAlloc: String
+    satPeekAlloc: String
+    satNPeekAlloc: String
+    sunPeekAlloc: String
+    sunNPeekAlloc: String
+    wePeekAlloc: String
+    weNPeekAlloc: String
+  }
+
 
   type Query {
     hello: String
