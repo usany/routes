@@ -111,12 +111,6 @@ const schema = `
     weNPeekAlloc: String
   }
 
-  type SeoulMsgHeader {
-    headerCd: String
-    headerMsg: String
-    itemCount: String
-  }
-
   type SeoulBusResponse {
     response: SeoulResponse
   }
@@ -133,11 +127,6 @@ const schema = `
     lastTm: String
     term: String
     stNm: String
-  }
-
-  type GyeonggiHeader {
-    resultCode: String
-    resultMsg: String
   }
 
   type GyeonggiBusResponse {
