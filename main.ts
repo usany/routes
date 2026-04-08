@@ -96,23 +96,7 @@ export function xmlToJson(xmlString: string): ParsedXmlData {
   return parseElement(xmlString);
 }
 
-const schema = `
-  type BusArrivalInfo {
-    arrmsg1: String
-    rtNm: String
-    firstTm: String
-    lastTm: String
-    term: String
-    stNm: String
-  }
-
-  type GyeonggiBusArrivalInfo {
-    routeName: String
-    predictTime1: String
-    locationNo1: String
-    stationNm1: String
-  }
-    
+const schema = `    
   type GyeonggiBusRouteInfo {
     routeName: String
     upFirstTime: String
@@ -133,17 +117,22 @@ const schema = `
     itemCount: String
   }
 
-  type SeoulMsgBody {
-    itemList: [BusArrivalInfo]
-  }
-
-  type SeoulResponse {
-    msgHeader: SeoulMsgHeader
-    msgBody: SeoulMsgBody
-  }
-
   type SeoulBusResponse {
     response: SeoulResponse
+  }
+  type SeoulResponse {
+    msgBody: SeoulMsgBody
+  }
+  type SeoulMsgBody {
+    itemList: [SeoulBusArrivalInfo]
+  }
+  type SeoulBusArrivalInfo {
+    arrmsg1: String
+    rtNm: String
+    firstTm: String
+    lastTm: String
+    term: String
+    stNm: String
   }
 
   type GyeonggiHeader {
@@ -151,36 +140,37 @@ const schema = `
     resultMsg: String
   }
 
-  type GyeonggiBody {
-    busArrivalList: [GyeonggiBusArrivalInfo]
-  }
-
   type GyeonggiBusResponse {
     response: GyeonggiResponse
   }
-
   type GyeonggiResponse {
-    msgHeader: GyeonggiHeader
     msgBody: GyeonggiBody
   }
-  type GyeonggiRouteBody {
-    busRouteInfoItem: GyeonggiBusRouteInfo
+  type GyeonggiBody {
+    busArrivalList: [GyeonggiBusArrivalInfo]
+  }  
+  type GyeonggiBusArrivalInfo {
+    routeName: String
+    predictTime1: String
+    locationNo1: String
+    stationNm1: String
   }
 
   type GyeonggiRouteResponse {
     response: GyeonggiRouteResponseData
   }
-
   type GyeonggiRouteResponseData {
-    msgHeader: GyeonggiHeader
     msgBody: GyeonggiRouteBody
+  }
+  type GyeonggiRouteBody {
+    busRouteInfoItem: GyeonggiBusRouteInfo
   }
 
   type Query {
     hello: String
-    seoulBusArrival(routeId: Int!): SeoulBusResponse
-    gyeonggiBusArrival(stationId: Int!): GyeonggiBusResponse
-    gyeonggiBusRoute(routeId: Int!): GyeonggiRouteResponse
+    seoulBusArrival(routeIds: [Int!]!): [SeoulBusResponse]
+    gyeonggiBusArrival(stationIds: [Int!]!): [GyeonggiBusResponse]
+    gyeonggiBusRoute(routeIds: [Int!]!): [GyeonggiRouteResponse]
     busArrival(routeId: Int!): String
   }
 
@@ -189,30 +179,33 @@ const schema = `
   }
 `;
 const root = {  
-  seoulBusArrival: async (_: any, { routeId }) => {
+  seoulBusArrival: async (_: any, { routeIds }) => {
     try {
       const apiKey = process.env.USERID;
-      const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${routeId}`;
-      const response = await fetch(url);
-      const xmlData = await response.text();
-      const jsonData = xmlToJson(xmlData);
-      // Transform XML data to match GraphQL schema
-      return {
-        response: {
-          msgBody: {
-            itemList: jsonData.msgBody?.itemList?.map(item => {
-              console.log(item)
-              return ({
-              arrmsg1: item.arrmsg1 || '',
-              rtNm: item.rtNm || '',
-              firstTm: item.firstTm || '',
-              lastTm: item.lastTm || '',
-              term: item.term || '',
-              stNm: item.stNm || ''
-            })}) || []
+      const results = [];
+      
+      for (const routeId of routeIds) {
+        const url = `http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey=${apiKey}&busRouteId=${routeId}`;
+        const response = await fetch(url);
+        const xmlData = await response.text();
+        const jsonData = xmlToJson(xmlData);
+        results.push({
+          response: {
+            msgBody: {
+              itemList: jsonData.msgBody?.itemList?.map(item => {
+                return ({
+                arrmsg1: item.arrmsg1 || '',
+                rtNm: item.rtNm || '',
+                firstTm: item.firstTm || '',
+                lastTm: item.lastTm || '',
+                term: item.term || '',
+                stNm: item.stNm || ''
+              })}) || []
+            }
           }
-        }
-      };
+        });
+      }
+      return results;
     } catch (error) {
       console.error('Error fetching Seoul bus data:', error);
       return {
@@ -230,16 +223,21 @@ const root = {
     }
   },
 
-  gyeonggiBusArrival: async (_: any, { stationId }) => {
+  gyeonggiBusArrival: async (_: any, { stationIds }) => {
     try {
       const apiKey = process.env.USERID;
-      const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
-      const data = await fetch(url);
-      const res = await data.json();
-      return res;
+      const results = [];
+      
+      for (const stationId of stationIds) {
+        const url = `https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2?serviceKey=${apiKey}&stationId=${stationId}&format=json`;
+        const data = await fetch(url);
+        const res = await data.json();
+        results.push(res);
+      }
+      return results;
     } catch (error) {
       console.error('Error fetching Gyeonggi bus arrival data:', error);
-      return {
+      return stationIds.map(() => ({
         response: {
           header: {
             resultCode: 'ERROR',
@@ -251,18 +249,21 @@ const root = {
             }
           }
         }
-      };
+      }));
     }
   },
 
-  gyeonggiBusRoute: async (_: any, { routeId }) => {
-    console.log(routeId)
+  gyeonggiBusRoute: async (_: any, { routeIds }) => {
     try {
       const apiKey = process.env.USERID;
-      const url = `https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=${apiKey}&routeId=${routeId}&format=json`;
-      const response = await fetch(url);
-      const apiData = await response.json();
-      console.log(apiData)
+      const results = []
+      for (const routeId of routeIds) {
+        const url = `https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteInfoItemv2?serviceKey=${apiKey}&routeId=${routeId}&format=json`;
+        const response = await fetch(url);
+        const apiData = await response.json();
+        results.push(apiData)
+        console.log(apiData)
+      }
       // Transform API data to match GraphQL schema
       // const pass = {
       //   response: {
@@ -274,7 +275,7 @@ const root = {
       //   }
       // };
       // console.log(pass.response.msgBody.busRouteInfoItem.routeName)
-      return apiData
+      return results
     } catch (error) {
       console.error('Error fetching Gyeonggi bus route data:', error);
       return {
@@ -395,10 +396,10 @@ app.get('/', (req, res) => {
   res.send('GraphQL Server is running! Visit /graphql for the GraphQL playground.')
 })
 app.get('/graphql', (req, res) => {
-  console.log(res)
+  console.log(req)
 })
 
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 5000
 
 app.listen(port, () => {
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`)
