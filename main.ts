@@ -105,13 +105,6 @@ const schema = `
     term: String
     stNm: String
   }
-
-  type GyeonggiBusArrivalInfo {
-    routeName: String
-    predictTime1: String
-    locationNo1: String
-    stationNm1: String
-  }
     
   type GyeonggiBusRouteInfo {
     routeName: String
@@ -151,18 +144,22 @@ const schema = `
     resultMsg: String
   }
 
-  type GyeonggiBody {
-    busArrivalList: [GyeonggiBusArrivalInfo]
-  }
-
   type GyeonggiBusResponse {
     response: GyeonggiResponse
   }
-
   type GyeonggiResponse {
-    msgHeader: GyeonggiHeader
     msgBody: GyeonggiBody
   }
+  type GyeonggiBody {
+    busArrivalList: [GyeonggiBusArrivalInfo]
+  }  
+  type GyeonggiBusArrivalInfo {
+    routeName: String
+    predictTime1: String
+    locationNo1: String
+    stationNm1: String
+  }
+
   type GyeonggiRouteBody {
     busRouteInfoItem: GyeonggiBusRouteInfo
   }
@@ -242,7 +239,7 @@ const root = {
         const res = await data.json();
         results.push(res);
       }
-      
+      console.log(results)
       return results;
     } catch (error) {
       console.error('Error fetching Gyeonggi bus arrival data:', error);
@@ -406,7 +403,7 @@ app.get('/graphql', (req, res) => {
   console.log(res)
 })
 
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 5000
 
 app.listen(port, () => {
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`)
