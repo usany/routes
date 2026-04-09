@@ -1,7 +1,7 @@
-import { createSchema, createYoga } from 'graphql-yoga'
+import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
-import cors from 'cors'
+import { createSchema, createYoga } from 'graphql-yoga'
 import helmet from 'helmet'
 
 dotenv.config()
@@ -404,6 +404,6 @@ app.get('/graphql', (req, res) => {
 
 const port = process.env.PORT || 5000
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`)
 })
